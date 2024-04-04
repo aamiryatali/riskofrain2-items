@@ -1,189 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Risk of Rain 2 Item Browser</title>
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
-
   <style>
     body {
-        background-color: darkgrey;
-        margin: 0;
-        padding: 0;
+      margin: 0;
+      padding: 0;
     }
 
     #nav-bar {
-        background-image: url('https://assets.rockpapershotgun.com/images/2019/04/risk-of-rain-2-distant-roost-690x388.jpg');
-        background-size: cover;
-        padding: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+      background-image: url('https://assets.rockpapershotgun.com/images/2019/04/risk-of-rain-2-distant-roost-690x388.jpg');
+      background-size: cover;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     #nav-div {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
     }
 
     #nav-div img {
-        width: 150px;
-        margin-right: 20px;
+      width: 150px;
+      margin-right: 20px;
     }
 
     #nav-div img:hover {
-        transform: scale(1.1);
+      transform: scale(1.1);
     }
 
     #nav-buttons {
-        margin-left: 20px;
+      margin-left: 20px;
     }
 
     #nav-buttons button {
-        padding: 10px 20px;
-        border: none;
-        background-color: transparent;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        position: relative;
-        text-decoration: none;
-        font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      background-color: transparent;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     #nav-buttons button::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background-color: white;
-        bottom: 0;
-        left: 0;
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      bottom: 0;
+      left: 0;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
 
     #nav-buttons button:hover::after {
-        transform: scaleX(1);
+      transform: scaleX(1);
     }
 
     #login-button {
-        padding: 10px 20px;
-        border: none;
-        background-color: black;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
+      padding: 10px 20px;
+      border: none;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
     }
 
     .login-dialog {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
-        background-size: cover;
-        background-opacity: 50%;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        z-index: 1000;
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
+      background-size: cover;
+      background-opacity: 50%;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
     }
 
     .login-dialog form {
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 20px;
-        border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 5px;
     }
 
     .login-dialog input {
-        margin-bottom: 10px;
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
     }
 
     .login-dialog button {
-        padding: 10px 20px;
-        border: none;
-        background-color: black;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-        margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
     }
 
     .search-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
     }
 
     .search-input {
-        width: 300px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        margin: 0 10px;
-        box-sizing: border-box;
+      width: 300px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin: 0 10px;
+      box-sizing: border-box;
     }
 
     .search-button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     .search-button:hover {
-        background-color: #0056b3;
+      background-color: darkgreen;
     }
 
+    .accordion {
+      position: relative;
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .accordion-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .accordion-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .accordion-content a:hover {
+      background-color: #ddd;
+    }
+
+    .accordion:hover .accordion-content {
+      display: block;
+    }
+
+    #full-page-element {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20%;
+      height: 100%;
+      background-color: darkgrey;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #full-page-element img {
+      max-width: 20%;
+      max-height: 20%;
+    }
+
+    #full-page-element p {
+      margin-top: 10px;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    
   </style>
 </head>
-
 <body>
 
 <nav id="nav-bar">
   <div id="nav-div" onclick="window.location.href='index.html'">
       <img src="https://preview.redd.it/game-logo-without-text-v0-br9t9i2qyuqb1.png?width=384&format=png&auto=webp&s=26702089060566395aa707d79f49706485f33aa4" alt="Risk of Rain 2 Logo">
   </div>
-    
+  
   <div id="nav-buttons">
-      <button onclick="window.location.href='Items.html'">Items</button>
-      <button onclick="window.location.href='Builds.html'">Builds</button>
-      <button onclick="window.location.href='Favorites.html'">Favorites</button>
+    <div class="accordion">
+      <button>Items</button>
+      <div class="accordion-content">
+        <a href="#" onclick="filterBy('All')">All</a>
+        <a href="#" onclick="filterBy('Common')">Common</a>
+        <a href="#" onclick="filterBy('Uncommon')">Uncommon</a>
+        <a href="#" onclick="filterBy('Legendary')">Legendary</a>
+        <a href="#" onclick="filterBy('Boss')">Boss</a>
+        <a href="#" onclick="filterBy('Lunar')">Lunar</a>
+        <a href="#" onclick="filterBy('Void')">Void</a>
+        <a href="#" onclick="filterBy('Equipment')">Equipment</a>
+      </div>
+    </div>
+    
+    <button onclick="window.location.href='Builds.html'">Builds</button>
+    <button onclick="window.location.href='Favorites.html'">Favorites</button>
   </div>
 
   <div class="search-container">
-      <input type="text" class="search-input" placeholder="Search...">
-      <button class="search-button">Search</button>
+    <input type="text" class="search-input" placeholder="Search...">
+    <button class="search-button">Search</button>
   </div>
   
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
 </nav>
-  
-<div id="full-page-element">
-  <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" alt="Power Elixir">
-  <p>Item Description:</p>
-  <p>Taking damage to below 25% health consumes this item, healing you for 75% of maximum health.</p>
-  <p>Stack Type:</p>
-  <p>None</p>
-</div>
+
+  <div id="full-page-element">
+    <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" alt="Power Elixir">
+    <p>Item Description:</p>
+    <p>Taking damage to below 25% health consumes this item, healing you for 75% of maximum health.</p>
+    <p>Stack Type:</p>
+    <p>None</p>
+  </div>
   
 <div class="container">
+  <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" style="background-color: white";>
 </div>
 
 <div class="login-dialog" id="login-dialog">
@@ -235,7 +306,21 @@
   function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';
+      document.getElementById('error-message').style.display = 'none'; // Hide error message initially
   }
+
+  function validateLogin() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+
+      // Check if username and password are correct (to replace)
+      if (username !== 'correct_username' || password !== 'correct_password') {
+          document.getElementById('error-message').style.display = 'block'; // Show error message
+          return false; // Prevent form submission
+      }
+      return true; // Allow form submission
+  }
+
   let state = [];
 
   function drawCard(records){
@@ -263,7 +348,6 @@
   showItems();
 
   function filterBy(filter){
-
       if(filter === 'All'){
           return drawCard();
       }
@@ -296,6 +380,15 @@
       }
       result.innerHTML = html;
   }
+
+  document.body.addEventListener('click', function(event) {
+      var dialog = document.getElementById('login-dialog');
+      if (!dialog.contains(event.target) && event.target !== document.getElementById('login-button')) {
+          dialog.style.display = 'none';
+          document.getElementById('error-message').style.display = 'none';
+      }
+  })
+  
 </script>
 
 </body>
