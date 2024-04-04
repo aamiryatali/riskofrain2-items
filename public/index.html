@@ -258,9 +258,9 @@
   
 <div class="login-dialog" id="login-dialog">
   <form onsubmit="return validateLogin()">
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button type="submit">Log in</button>
+    <input type="text" id="user" placeholder="Username">
+    <input type="password" id="pass" placeholder="Password">
+    <button type="button" onclick="realSignUp()">Log in</button>
     <p id="error-message" style="color: red; display: none;">Wrong account email or password</p>
     <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
@@ -273,7 +273,31 @@
   <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" style="background-color: white;" onclick="itemDesc('63d9f34f6d08bb0acd07daf7')">
 </div>
   
+<script type="module">
+  import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
+  
+  setAuthListeners(setLoggedInUI);
 
+  function setLoggedInUI(){
+          document.querySelector('#logbutton').innerHTML = "logout";
+          document.querySelector('#loginBtn').style.display = 'none';
+          document.querySelector('#logoutBtn').style.display = 'inline-block';
+      }
+
+  async function realSignIn(){
+      console.log("hi");
+      let username = document.querySelector('#user').value;
+      let password = document.querySelector('#pass').value;
+      await signIn(auth, username, password);
+      
+      console.log("hi2");
+      console.log(auth);
+      console.log(username);
+      console.log(password);
+      console.log(auth.currentUser.uid);
+  }
+  window.realSignIn = realSignIn;
+</script>
 <script>
   function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
