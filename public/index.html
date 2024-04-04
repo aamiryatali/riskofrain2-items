@@ -1,223 +1,253 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Risk of Rain 2 Item Browser</title>
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
 
   <style>
-
     body {
-      background-color: darkgrey;
-      margin: 0;
-      padding: 0;
+        background-color: darkgrey;
+        margin: 0;
+        padding: 0;
     }
 
     #nav-bar {
-      background-image: url('https://assets.rockpapershotgun.com/images/2019/04/risk-of-rain-2-distant-roost-690x388.jpg');
-      background-size: cover;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+        background-image: url('https://assets.rockpapershotgun.com/images/2019/04/risk-of-rain-2-distant-roost-690x388.jpg');
+        background-size: cover;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
     }
 
     #nav-div {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
     }
 
     #nav-div img {
-      width: 150px;
-      margin-right: 20px;
+        width: 150px;
+        margin-right: 20px;
     }
 
     #nav-div img:hover {
-      transform: scale(1.1);
+        transform: scale(1.1);
     }
 
     #nav-buttons {
-      display: flex;
-      align-items: center;
-      margin-left: 20px;
+        margin-left: 20px;
     }
 
     #nav-buttons button {
-      padding: 10px 20px;
-      border: none;
-      background-color: transparent;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      position: relative;
-      text-decoration: none;
-      font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        background-color: transparent;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        position: relative;
+        text-decoration: none;
+        font-weight: bold;
     }
 
     #nav-buttons button::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      background-color: white;
-      bottom: 0;
-      left: 0;
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        bottom: 0;
+        left: 0;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
     }
 
     #nav-buttons button:hover::after {
-      transform: scaleX(1);
+        transform: scaleX(1);
     }
 
     #login-button {
-      padding: 10px 20px;
-      border: none;
-      background-color: black;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
+        padding: 10px 20px;
+        border: none;
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
     }
-    
+
     .login-dialog {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
-      background-size: cover;
-      background-opacity: 50%;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      z-index: 1000;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
+        background-size: cover;
+        background-opacity: 50%;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
     }
 
     .login-dialog form {
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 5px;
     }
 
     .login-dialog input {
-      margin-bottom: 10px;
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
     }
 
     .login-dialog button {
-      padding: 10px 20px;
-      border: none;
-      background-color: black;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 10px;
+        padding: 10px 20px;
+        border: none;
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+    }
+
+    .search-input {
+        width: 300px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .search-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background-color: #0056b3;
     }
 
   </style>
-  
 </head>
 
 <body>
 
-  <nav id="nav-bar">
-    <div id="nav-div" onclick="window.location.href='index.html'">
+<nav id="nav-bar">
+  <div id="nav-div" onclick="window.location.href='index.html'">
       <img src="https://preview.redd.it/game-logo-without-text-v0-br9t9i2qyuqb1.png?width=384&format=png&auto=webp&s=26702089060566395aa707d79f49706485f33aa4" alt="Risk of Rain 2 Logo">
-    </div>
-    <div id="nav-buttons">
+  </div>
+    
+  <div id="nav-buttons">
       <button onclick="window.location.href='Items.html'">Items</button>
       <button onclick="window.location.href='Builds.html'">Builds</button>
-      <button onclick="window.location.href='Favorites.html'">Favorites</button> 
-    </div>
-    <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
-  </nav>
-
-  <div class="container">
+      <button onclick="window.location.href='Favorites.html'">Favorites</button>
   </div>
 
-  <div class="login-dialog" id="login-dialog">
-      <form>
-        <input type="text" placeholder="Username">
-        <input type="password" placeholder="Password">
-        <button type="submit">Log in</button>
-        <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
-      </form>
+  <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search...">
+      <button class="search-button">Search</button>
   </div>
+  
+  <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
+</nav>
 
-  
-  
-</body>
-  
+<div class="container">
+</div>
+
+<div class="login-dialog" id="login-dialog">
+  <form>
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <button type="submit">Log in</button>
+      <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
+  </form>
+</div>
+
 <script>
-    function showLoginDialog() {
+  function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';
-    }
+  }
 
   let state = [];
 
   function drawCard(records){
-    let result = document.querySelector('');
+      let result = document.querySelector('');
 
-    let html = '';
+      let html = '';
 
-    for(let rec of records){
-        html += ``;
+      for(let rec of records){
+          html += ``;
       }
       result.innerHTML = html;
-    }
+  }
 
   async function getData() {
-    const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
-    const data = await response.json();
-    return data;
+      const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
+      const data = await response.json();
+      return data;
   }
 
   async function showItems() {
-    state = await getData();
-    drawCard(state);
+      state = await getData();
+      drawCard(state);
   }
 
   showItems();
 
   function filterBy(filter){
 
-    if(filter === 'All'){
-      return drawCard();
-    }
+      if(filter === 'All'){
+          return drawCard();
+      }
 
-    let filtered = [];
+      let filtered = [];
 
-    for (let rec of state) {
-      if (rec.rarity === filter)
-        filtered.push(rec);
-       }
+      for (let rec of state) {
+          if (rec.rarity === filter)
+              filtered.push(rec);
+      }
 
-    draw(filtered);
+      draw(filtered);
   }
 
   function itemDesc(item){
-    let result = document.querySelector('');
+      let result = document.querySelector('');
 
-    let html = '';
-
-    for(let rec of state){
-      if(rec.itemImage === item){
-        html += ``;
+      let html = '';
+    
+      for(let rec of state){
+          if(rec.itemImage === item){
+              html += ``;
+          }
       }
-    }
-    result.innerHTML = html;
+      result.innerHTML = html;
   }
-  </script>
+</script>
+
+</body>
 </html>
