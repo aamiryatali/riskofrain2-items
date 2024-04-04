@@ -268,7 +268,6 @@
 
 <script type="module">
   import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
-  
   setAuthListeners(setLoggedInUI);
 
   function setLoggedInUI(){
@@ -293,9 +292,6 @@
 </script>
 
 <script>
-    
-    
-
       function setLoggedOutUI(){
           M.toast({html: 'Logged Out!'})
           document.querySelector('#user').innerHTML = '';
