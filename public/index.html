@@ -86,7 +86,6 @@
       border-radius: 5px;
     }
     
-    /* Style for login dialog */
     .login-dialog {
       display: none;
       position: fixed;
@@ -148,20 +147,77 @@
   </div>
 
   <div class="login-dialog" id="login-dialog">
-    <form>
-      <input type="text" placeholder="Username">
-      <input type="password" placeholder="Password">
-      <button type="submit">Log in</button>
-      <button type="button" onclick="window.location.href='SignUp.html'">Sign up</button>
-    </form>
+      <form>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button type="submit">Log in</button>
+        <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
+      </form>
   </div>
+
   
-  <script>
+  
+</body>
+  
+<script>
     function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';
     }
-  </script>
-</body>
 
+  let state = [];
+
+  function drawCard(records){
+    let result = document.querySelector('');
+
+    let html = '';
+
+    for(let rec of records){
+        html += ``;
+      }
+      result.innerHTML = html;
+    }
+
+  async function getData() {
+    const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
+    const data = await response.json();
+    return data;
+  }
+
+  async function showItems() {
+    state = await getData();
+    drawCard(state);
+  }
+
+  showItems();
+
+  function filterBy(filter){
+
+    if(filter === 'All'){
+      return drawCard();
+    }
+
+    let filtered = [];
+
+    for (let rec of state) {
+      if (rec.rarity === filter)
+        filtered.push(rec);
+       }
+
+    draw(filtered);
+  }
+
+  function itemDesc(item){
+    let result = document.querySelector('');
+
+    let html = '';
+
+    for(let rec of state){
+      if(rec.itemImage === item){
+        html += ``;
+      }
+    }
+    result.innerHTML = html;
+  }
+  </script>
 </html>
