@@ -264,8 +264,8 @@
   </div>
 
   <div class="search-container">
-    <input type="text" class="search-input" placeholder="Search...">
-    <button class="search-button">Search</button>
+    <input id="search-key" type="text" class="search-input" placeholder="Search...">
+    <button class="search-button" onclick="search()">Search</button>
   </div>
   
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
@@ -428,6 +428,22 @@
           }
       }
       result.innerHTML = html;
+  }
+
+  function search() {
+    let searchKey = document.querySelector('#search-key').value;
+
+    let results = [];
+
+    for (let rec of state) {
+      let searchText = rec.itemName.toUpperCase();
+      searchKey = searchKey.toUpperCase();
+
+      if (searchText.search(searchKey) !== -1) {
+        results.push(rec);
+      }
+      drawCard(results);
+    }
   }
 
   function closeItemDesc() {
