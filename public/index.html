@@ -6,10 +6,14 @@
   <title>Risk of Rain 2 Item Browser</title>
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
   <style>
-    body {
+      body {
       margin: 0;
       padding: 0;
-      background-color: #FFFDD0;
+      background-color: black;
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
     }
 
     #nav-bar {
@@ -326,40 +330,41 @@
 
       for(let rec of records){
         if(rec.rarity === 'Common'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Uncommon'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #00c853;" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Legendary'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Boss'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Lunar'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Void'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Equipment'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
-      
+    
+      html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`
       result.innerHTML = html;
   }
 
