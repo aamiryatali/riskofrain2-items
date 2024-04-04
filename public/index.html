@@ -6,10 +6,14 @@
   <title>Risk of Rain 2 Item Browser</title>
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
   <style>
-    body {
+      body {
       margin: 0;
       padding: 0;
-      background-color: #FFFDD0;
+      background-color: black;
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      color: #fff;
     }
 
     #nav-bar {
@@ -258,9 +262,9 @@
   
 <div class="login-dialog" id="login-dialog">
   <form onsubmit="return validateLogin()">
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button type="submit">Log in</button>
+    <input type="text" id="user" placeholder="Username">
+    <input type="password" id="pass" placeholder="Password">
+    <button type="button" onclick="realSignIn()">Log in</button>
     <p id="error-message" style="color: red; display: none;">Wrong account email or password</p>
     <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
@@ -273,7 +277,31 @@
   <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" style="background-color: white;" onclick="itemDesc('63d9f34f6d08bb0acd07daf7')">
 </div>
   
+<script type="module">
+  import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
+  
+  setAuthListeners(setLoggedInUI);
 
+  function setLoggedInUI(){
+          document.querySelector('#logbutton').innerHTML = "logout";
+          document.querySelector('#loginBtn').style.display = 'none';
+          document.querySelector('#logoutBtn').style.display = 'inline-block';
+      }
+
+  async function realSignIn(){
+      console.log("hi");
+      let username = document.querySelector('#user').value;
+      let password = document.querySelector('#pass').value;
+      await signIn(auth, username, password);
+      
+      console.log("hi2");
+      console.log(auth);
+      console.log(username);
+      console.log(password);
+      console.log(auth.currentUser.uid);
+  }
+  window.realSignIn = realSignIn;
+</script>
 <script>
   function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
@@ -302,39 +330,43 @@
 
       for(let rec of records){
         if(rec.rarity === 'Common'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Uncommon'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #00c853;" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Legendary'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Boss'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Lunar'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Void'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')">`;
         }
       }
       for(let rec of records){
         if(rec.rarity === 'Equipment'){
-          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
+    
+      html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`
+      result.innerHTML = html;
+  }
       
       result.innerHTML = html;
   }
