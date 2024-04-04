@@ -190,29 +190,48 @@
   <form>
       <input type="text" id="user" placeholder="Username">
       <input type="password" id="pass" placeholder="Password">
-      <button type="submit" onclick="realSignIn()">Log in</button>
+      <button type="button" onclick="realSignIn()">Log in</button>
       <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
 </div>
 
 <script type="module">
   import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
+  
+  setAuthListeners(setLoggedInUI);
+
+  function setLoggedInUI(){
+          document.querySelector('#logbutton').innerHTML = "logout";
+          document.querySelector('#loginBtn').style.display = 'none';
+          document.querySelector('#logoutBtn').style.display = 'inline-block';
+      }
 
   async function realSignIn(){
+      console.log("hi");
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
-      setAuthListeners();
-      let user = await signIn(auth, username, password);
+      await signIn(auth, username, password);
       
+      console.log("hi2");
       console.log(auth);
       console.log(username);
       console.log(password);
-      console.log(user.uid);
+      console.log(auth.currentUser.uid);
   }
   window.realSignIn = realSignIn;
 </script>
 
 <script>
+    
+    
+
+      function setLoggedOutUI(){
+          M.toast({html: 'Logged Out!'})
+          document.querySelector('#user').innerHTML = '';
+          document.querySelector('#loginBtn').style.display = 'inline-block';
+          document.querySelector('#logoutBtn').style.display = 'none';
+      }
+
   function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';

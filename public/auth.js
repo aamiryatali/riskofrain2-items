@@ -16,16 +16,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const user = auth.currentUser;
 
-function setAuthListeners(onLogin, onLogout){
+function setAuthListeners(setLoggedInUI){
   onAuthStateChanged(auth, user => {
     if (user) {
+      setLoggedInUI();
       const uid = user.id;
       console.log("signed in");
       console.log(uid);
-      onLogin();
     } else {
       console.log("not signed in");
-      onLogout();
     }
   });
 }
@@ -73,4 +72,4 @@ async function logout() {
     });
 }
 
-export {auth, createUser, setAuthListeners, signIn, logout};
+export {auth, createUser, setAuthListeners, signIn, logout, signInWithEmailAndPassword};
