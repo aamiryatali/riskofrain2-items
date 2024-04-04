@@ -7,7 +7,6 @@
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
   <style>
     body {
-      background-color: darkgrey;
       margin: 0;
       padding: 0;
     }
@@ -137,7 +136,7 @@
     }
 
     .search-button {
-      background-color: #007bff;
+      background-color: green;
       color: white;
       border: none;
       padding: 10px 15px;
@@ -146,7 +145,7 @@
     }
 
     .search-button:hover {
-      background-color: #0056b3;
+      background-color: darkgreen;
     }
 
     .accordion {
@@ -178,6 +177,32 @@
     .accordion:hover .accordion-content {
       display: block;
     }
+
+    #full-page-element {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 20%;
+      height: 100%;
+      background-color: darkgrey;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #full-page-element img {
+      max-width: 20%;
+      max-height: 20%;
+    }
+
+    #full-page-element p {
+      margin-top: 10px;
+      color: white;
+    }
+
+    
   </style>
 </head>
 <body>
@@ -213,7 +238,15 @@
   
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
 </nav>
-
+  
+<div id="full-page-element">
+  <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" alt="Power Elixir">
+  <p>Item Description:</p>
+  <p>Taking damage to below 25% health consumes this item, healing you for 75% of maximum health.</p>
+  <p>Stack Type:</p>
+  <p>None</p>
+</div>
+  
 <div class="container">
 </div>
 
@@ -225,7 +258,6 @@
     <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
 </div>
-</body>
 
 <script>
   function showLoginDialog() {
@@ -281,11 +313,18 @@
     
       for(let rec of state){
           if(rec.itemImage === item){
-              html += ``;
+              html += `<div id="full-page-element">
+  <img src="${rec.itemImage}" alt="${rec.itemName}">
+  <p>Item Description:</p>
+  <p>${rec.description}</p>
+  <p>Stack Type:</p>
+  <p>${rec.stackType}</p>
+</div>`;
           }
       }
       result.innerHTML = html;
   }
 </script>
-  
+
+</body>
 </html>
