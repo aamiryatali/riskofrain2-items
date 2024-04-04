@@ -47,13 +47,39 @@
     </style>
 </head>
 <body>
-    <form action="process_signup.php" method="POST">
-        <h2>Sign Up</h2>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br>
-        <input type="submit" value="Sign Up">
-    </form>
+  <form id="myForm" class="col s12">
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="username">Username</label>
+        <input name="username" type="text" minlength="8" required placeholder="Minimum 8 characters">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <label for="password">Password</label>
+        <input name="password" type="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Required: Symbol, Capital and Common Letters, Numbers">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <input type="submit" value="Sign Up" onclick="return validateForm()" />
+      </div>
+    </div>
+  </form>
+
+  <script>
+    function validateForm() {
+      var username = document.forms["myForm"]["username"].value;
+      var password = document.forms["myForm"]["password"].value;
+      if (username.length >= 8 && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        alert("Username must be at least 8 characters long and password must contain a symbol, capital and common letters, and numbers.");
+        return false;
+      }
+    }
+  </script>
 </body>
 </html>
