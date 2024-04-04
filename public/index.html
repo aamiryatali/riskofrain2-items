@@ -49,7 +49,6 @@
     }
 
     #nav-buttons button {
-      margin: 5px 20px;
       padding: 10px 20px;
       border: none;
       background-color: transparent;
@@ -87,6 +86,46 @@
       border-radius: 5px;
     }
     
+    /* Style for login dialog */
+    .login-dialog {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
+      background-size: cover;
+      background-opacity: 50%;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .login-dialog form {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .login-dialog input {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .login-dialog button {
+      padding: 10px 20px;
+      border: none;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
   </style>
   
 </head>
@@ -102,15 +141,26 @@
       <button onclick="window.location.href='Builds.html'">Builds</button>
       <button onclick="window.location.href='Favorites.html'">Favorites</button> 
     </div>
-    <div><button id="login-button" onclick="window.location.href='Login.html'">Log in</button></div>
+    <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
   </nav>
 
   <div class="container">
   </div>
 
+  <div class="login-dialog" id="login-dialog">
+    <form>
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <button type="submit">Log in</button>
+      <button type="button" onclick="window.location.href='SignUp.html'">Sign up</button>
+    </form>
+  </div>
   
   <script>
-    
+    function showLoginDialog() {
+      var dialog = document.getElementById('login-dialog');
+      dialog.style.display = 'block';
+    }
   </script>
 </body>
 
