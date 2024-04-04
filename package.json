@@ -1,0 +1,25 @@
+{
+    "name": "info1601project",
+    "version": "1.0.0",
+    "description": "[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/aamiryatali/riskofrain2-items)",
+    "main": "index.js",
+    "scripts": {
+      "login": "firebase login --no-localhost",
+      "start": "firebase serve"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/aamiryatali/riskofrain2-items.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/aamiryatali/riskofrain2-items/issues"
+    },
+    "homepage": "https://github.com/aamiryatali/riskofrain2-items#readme",
+    "dependencies": {
+      "firebase-tools": "^13.6.0"
+    }
+  }
+  
