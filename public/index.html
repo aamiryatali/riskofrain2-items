@@ -9,6 +9,7 @@
     body {
       margin: 0;
       padding: 0;
+      background-color: #FFFDD0;
     }
 
     #nav-bar {
@@ -178,10 +179,26 @@
       display: block;
     }
 
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .container img {
+      width: 100px;
+      height: 100px;
+      margin: 5px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
     #full-page-element {
-      position: absolute;
+      position: sticky;
       top: 0;
-      left: 0;
       width: 20%;
       height: 100%;
       background-color: darkgrey;
@@ -189,12 +206,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     #full-page-element img {
-      max-width: 20%;
-      max-height: 20%;
+      max-width: 100%;
+      max-height: auto;
     }
 
     #full-page-element p {
@@ -202,13 +219,6 @@
       color: white;
     }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-    }
-    
   </style>
 </head>
 <body>
@@ -244,65 +254,26 @@
   
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
 </nav>
-
-  <div id="full-page-element">
-    <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" alt="Power Elixir">
-    <p>Item Description:</p>
-    <p>Taking damage to below 25% health consumes this item, healing you for 75% of maximum health.</p>
-    <p>Stack Type:</p>
-    <p>None</p>
-  </div>
   
-<div class="container">
-  <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" style="background-color: white";>
-</div>
-
 <div class="login-dialog" id="login-dialog">
-  <form>
-      <input type="text" id="user" placeholder="Username">
-      <input type="password" id="pass" placeholder="Password">
-      <button type="button" onclick="realSignIn()">Log in</button>
-      <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
+  <form onsubmit="return validateLogin()">
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button type="submit">Log in</button>
+    <p id="error-message" style="color: red; display: none;">Wrong account email or password</p>
+    <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
 </div>
-
-<script type="module">
-  import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
   
-  setAuthListeners(setLoggedInUI);
-
-  function setLoggedInUI(){
-          document.querySelector('#logbutton').innerHTML = "logout";
-          document.querySelector('#loginBtn').style.display = 'none';
-          document.querySelector('#logoutBtn').style.display = 'inline-block';
-      }
-
-  async function realSignIn(){
-      console.log("hi");
-      let username = document.querySelector('#user').value;
-      let password = document.querySelector('#pass').value;
-      await signIn(auth, username, password);
-      
-      console.log("hi2");
-      console.log(auth);
-      console.log(username);
-      console.log(password);
-      console.log(auth.currentUser.uid);
-  }
-  window.realSignIn = realSignIn;
-</script>
+<div id="item-desc">
+</div>
+  
+<div class="container">
+  <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" style="background-color: white;" onclick="itemDesc('63d9f34f6d08bb0acd07daf7')">
+</div>
+  
 
 <script>
-    
-    
-
-      function setLoggedOutUI(){
-          M.toast({html: 'Logged Out!'})
-          document.querySelector('#user').innerHTML = '';
-          document.querySelector('#loginBtn').style.display = 'inline-block';
-          document.querySelector('#logoutBtn').style.display = 'none';
-      }
-
   function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';
@@ -324,13 +295,46 @@
   let state = [];
 
   function drawCard(records){
-      let result = document.querySelector('');
+      let result = document.querySelector('.container');
 
       let html = '';
 
       for(let rec of records){
-          html += ``;
+        if(rec.rarity === 'Common'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
       }
+      for(let rec of records){
+        if(rec.rarity === 'Uncommon'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Legendary'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Boss'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Lunar'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Void'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Equipment'){
+          html += `<img src="${rec.itemImage}" style="background-color: ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      
       result.innerHTML = html;
   }
 
@@ -349,7 +353,7 @@
 
   function filterBy(filter){
       if(filter === 'All'){
-          return drawCard();
+          return drawCard(state);
       }
 
       let filtered = [];
@@ -359,26 +363,31 @@
               filtered.push(rec);
       }
 
-      draw(filtered);
+      drawCard(filtered);
   }
 
   function itemDesc(item){
-      let result = document.querySelector('');
+      let result = document.querySelector('#item-desc');
 
       let html = '';
     
       for(let rec of state){
-          if(rec.itemImage === item){
+          if(rec._id === item){
               html += `<div id="full-page-element">
-  <img src="${rec.itemImage}" alt="${rec.itemName}">
-  <p>Item Description:</p>
-  <p>${rec.description}</p>
-  <p>Stack Type:</p>
-  <p>${rec.stackType}</p>
-</div>`;
+    <img src="${rec.itemImage}" alt="${rec.itemName}">
+    <p>Item Description:</p>
+    <p>${rec.description}</p>
+    <p>Stack Type:</p>
+    <p>${rec.stackType}</p>
+    <button onclick="closeItemDesc()">X</button>
+  </div>`;
           }
       }
       result.innerHTML = html;
+  }
+
+  function closeItemDesc() {
+      document.querySelector('#item-desc').innerHTML = '';
   }
 
   document.body.addEventListener('click', function(event) {
