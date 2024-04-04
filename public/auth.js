@@ -20,22 +20,17 @@ function setAuthListeners(onLogin, onLogout){
   onAuthStateChanged(auth, user => {
     if (user) {
       const uid = user.id;
+      console.log("signed in");
+      console.log(uid);
       onLogin();
     } else {
+      console.log("not signed in");
       onLogout();
     }
   });
 }
 
-async function createUser(){
-/*
-  try{
-    await setPersistence(auth, browserLocalPersistence);
-    const user = await signInAnonymously(auth);
-  }catch(e){
-    console.error(e);
-  }
-*/
+async function createUser(auth, email, password){
   createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
@@ -47,9 +42,10 @@ async function createUser(){
     const errorMessage = error.message;
     // ..
   });
+  return auth.currentUser;
 }
 
-async function signIn(){
+async function signIn(auth, email, password){
     signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
@@ -60,6 +56,7 @@ async function signIn(){
     const errorCode = error.code;
     const errorMessage = error.message;
   });
+  return auth.currentUser;
 }
 
 async function logout() {

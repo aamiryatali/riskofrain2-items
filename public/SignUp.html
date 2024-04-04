@@ -68,18 +68,27 @@
     </div>
   </form>
 
-  <script>
-    function validateForm() {
+  <script type="module">
+    import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
+    async function validateForm() {
+      console.log("hi");
       var username = document.forms["myForm"]["username"].value;
       var password = document.forms["myForm"]["password"].value;
       if (username.length >= 8 && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
-        window.location.href = 'index.html';
-        return false;
+      window.location.href = 'index.html';
+       // return false;
       } else {
         alert("Username must be at least 8 characters long and password must contain a symbol, capital and common letters, and numbers.");
-        return false;
+       // return false;
       }
+      await createUser(auth, username, password);
+      let user = auth.currentUser;
+      console.log(auth);
+      console.log(username);
+      console.log(password);
+      console.log(user.uid);
     }
+    window.validateForm = validateForm;
   </script>
 </body>
 </html>
