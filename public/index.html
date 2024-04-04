@@ -174,7 +174,15 @@
   
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
 </nav>
-
+  
+<div id="full-page-element">
+  <img src="https://res.cloudinary.com/morgancrawfordweb/image/upload/v1675211996/riskofrain/Power_Elixir_ghkrbu.webp" alt="Power Elixir">
+  <p>Item Description:</p>
+  <p>Taking damage to below 25% health consumes this item, healing you for 75% of maximum health.</p>
+  <p>Stack Type:</p>
+  <p>None</p>
+</div>
+  
 <div class="container">
 </div>
 
@@ -258,7 +266,13 @@
     
       for(let rec of state){
           if(rec.itemImage === item){
-              html += ``;
+              html += `<div id="full-page-element">
+  <img src="${rec.itemImage}" alt="${rec.itemName}">
+  <p>Item Description:</p>
+  <p>${rec.description}</p>
+  <p>Stack Type:</p>
+  <p>${rec.stackType}</p>
+</div>`;
           }
       }
       result.innerHTML = html;
