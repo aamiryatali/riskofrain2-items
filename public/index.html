@@ -224,6 +224,17 @@
       color: white;
     }
 
+    #full-page-element button {
+      top: 10px;
+      left: 10px;
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -404,12 +415,15 @@
       for(let rec of state){
           if(rec._id === item){
               html += `<div id="full-page-element">
+    <button onclick="closeItemDesc()">X</button>
+    <br><br>
+    <p>${rec.itemName}</p>
     <img src="${rec.itemImage}" alt="${rec.itemName}">
     <p>Item Description:</p>
     <p>${rec.description}</p>
     <p>Stack Type:</p>
     <p>${rec.stackType}</p>
-    <button onclick="closeItemDesc()">X</button>
+    
   </div>`;
           }
       }
