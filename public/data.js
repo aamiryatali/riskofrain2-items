@@ -50,4 +50,11 @@ async function deleteReview(auth, reviewId){
     }
 }
 
-export {getBooks, getReviews, createReview, deleteReview};
+async function favorite(id){
+    const obj = {
+      id: id
+    };
+    addDoc(collection(db, `/users/${auth.currentUser.uid}/favorites`), reviewData)
+  }
+
+export {getBooks, getReviews, createReview, deleteReview, favorite} ;
