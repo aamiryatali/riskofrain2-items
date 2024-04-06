@@ -399,7 +399,7 @@
 
      if(isAlreadyAdded === "true"){
       popup.style.backgroundColor = 'red';
-      popup.innerHTML = itemName + ' has already been added to favorites';
+      popup.innerHTML = itemName + ' has been removed from favorites';
      } else {
       popup.style.backgroundColor = 'green';
       popup.innerHTML = itemName + ' has been added to favorites';
@@ -438,7 +438,6 @@
 
   function drawCard(records){
       let result = document.querySelector('.container');
-
       let html = '';
 
       for(let rec of records){
@@ -564,9 +563,6 @@
       }
   })
 
-  
-  
-  
 </script>
 
 </body>

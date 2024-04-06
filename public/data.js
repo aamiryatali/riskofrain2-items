@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getFirestore, collection, getDoc, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { getFirestore, collection, getDoc, addDoc, getDocs, deleteDoc, doc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import firebaseConfig from "./firebaseConfig.js";
 
 
@@ -31,7 +31,7 @@ async function getFavorites(uid, drawCard){
     for(let rec of favorites){
       console.log(rec.id);
       for(let item of data){
-        if(rec.id === item._id){
+        if(rec.itemID === item._id){
             favItems.push(item);
         }
       }
@@ -70,19 +70,26 @@ async function favorite(uid, id, addToFavoritesPopup, name){
     const favdb = collection(db, `/users/${uid}/favorites`);
     const favDocs = await getDocs(favdb);
     const favorites = [];
+    let found = false;
     favDocs.forEach((doc) => {
-            favorites.push(doc.data());
+            console.log(doc.id);
+            if(doc.data().itemID === id){
+                addToFavoritesPopup(name, "true");
+                deleteDoc(doc.ref)
+                found = true;
+            } else {
+                favorites.push(doc.data());
+            }
     });
-    for(let fav of favorites){
-        if(fav.id === id){
-            addToFavoritesPopup(name, "true");
-            return;
-        }
+    
+    if(found === true){
+        return true;
     }
 
+    console.log("you were not supposed to be here");
     addToFavoritesPopup(name, "false");
     const obj = {
-      id: id
+      itemID: id
     };
     addDoc(collection(db, `/users/${uid}/favorites`), obj);
   }
