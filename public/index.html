@@ -377,6 +377,7 @@
   }
 
   function addFavorite(id){
+    //Implement error if already favorited
     console.log("got in teh favorite functin e ya");
     let uid = auth.currentUser.uid;
     console.log("uid is")
@@ -386,6 +387,7 @@
   }
 
   async function showFavorites() {
+    //IMplement errro thing if not logged in
     getFavorites(auth.currentUser.uid, drawCard);
   }
 
