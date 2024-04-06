@@ -379,13 +379,13 @@
   }
 
   function addFavorite(id, name){
-    //Implement error if already favorited
-    console.log("got in teh favorite functin e ya");
+    let user = auth.currentUser;
+    if(user === null){
+      alert("Please log in to add and view favorites!");
+      return;
+    }
     let uid = auth.currentUser.uid;
-    console.log("uid is")
-    console.log(uid);
     favorite(uid, id, addToFavoritesPopup, name);
-    console.log("faorite hopefully added");
   }
 
   function addToFavoritesPopup(itemName, isAlreadyAdded) {
@@ -412,7 +412,11 @@
    }
 
   async function showFavorites() {
-    //IMplement errro thing if not logged in
+    let user = auth.currentUser;
+    if(user === null){
+      alert("Please log in to add and view favorites!");
+      return;
+    }
     getFavorites(auth.currentUser.uid, drawCard);
   }
 
