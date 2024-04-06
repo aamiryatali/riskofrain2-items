@@ -33,7 +33,7 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
-        input[type="submit"] {
+        input[type="button"] {
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -41,8 +41,14 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        input[type="submit"]:hover {
+        input[type="button"]:hover {
             background-color: #0056b3;
+        }
+        form p{
+          font-size: 13px;
+          padding: 0;
+          margin: 0;
+          margin-bottom: 10px;
         }
     </style>
 </head>
@@ -50,20 +56,21 @@
   <form id="myForm" class="col s12">
     <div class="row">
       <div class="input-field col s12">
-        <label for="username">Username</label>
-        <input name="username" type="text" minlength="8" required placeholder="Minimum 8 characters">
+        <label for="username">Email</label>
+        <input name="username" type="text" minlength="8" required placeholder="Enter valid email">
       </div>
     </div>
     <div class="row">
       <div class="input-field col s12">
         <label for="password">Password</label>
-        <input name="password" type="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Required: Symbol, Capital and Common Letters, Numbers">
+        <input name="password" type="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Enter password">
+        <p>Minimum length 8, at least 1 symbol, capital letter, common letter and number</p>
       </div>
     </div>
 
     <div class="row">
       <div class="col">
-        <input type="submit" value="Sign Up" onclick="return validateForm()" />
+        <input type="button" value="Sign Up" onclick="return validateForm()" />
       </div>
     </div>
   </form>
@@ -74,11 +81,11 @@
       console.log("hi");
       var username = document.forms["myForm"]["username"].value;
       var password = document.forms["myForm"]["password"].value;
-      if (username.length >= 8 && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
+      if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
       window.location.href = 'index.html';
        // return false;
       } else {
-        alert("Username must be at least 8 characters long and password must contain a symbol, capital and common letters, and numbers.");
+        alert("Email must be valid and password must contain a symbol, capital and common letters, and numbers.");
        // return false;
       }
       await createUser(auth, username, password);
