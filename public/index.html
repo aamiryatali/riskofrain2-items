@@ -315,7 +315,7 @@
     </div>
     
     <button onclick="window.location.href='Builds.html'">Builds</button>
-    <button onclick="window.location.href='Favorites.html'">Favorites</button>
+    <button onclick="showFavorites()">Favorites</button>
   </div>
 
   <div class="search-container">
@@ -345,7 +345,7 @@
   
 <script type="module">
   import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
-  import {favorite} from './data.js';
+  import {getFavorites, favorite} from './data.js';
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
   function setLoggedInUI(){
@@ -384,6 +384,12 @@
     favorite(uid, id);
     console.log("faorite hopefully added");
   }
+
+  async function showFavorites() {
+    getFavorites(auth.currentUser.uid, drawCard);
+  }
+
+  window.showFavorites = showFavorites;
   window.addFavorite = addFavorite;
   window.realSignIn = realSignIn;
 </script>
@@ -525,6 +531,7 @@
           document.getElementById('error-message').style.display = 'none';
       }
   })
+  
   
 </script>
 

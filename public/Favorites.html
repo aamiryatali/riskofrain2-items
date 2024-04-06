@@ -319,6 +319,10 @@
 </div>
 
 
+<script type="module">
+  import {getFavorites} from './data.js';
+
+</script>
 <script>
   function showLoginDialog() {
       var dialog = document.getElementById('login-dialog');
@@ -340,7 +344,7 @@
 
   let state = [];
 
-  function drawCard(records){
+  function drawFavorites(records){
       let result = document.querySelector('.container');
 
       let html = '';
@@ -357,18 +361,7 @@
       return data;
   }
 
-  async function showItems() {
-    const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
-    const data = await response.json();
-    let favorites = await getData();
-    
-    for(let rec of favorites){
-      if(favorites.id === data._id){
-        state.push(data);
-      }
-    }
-      drawCard(state);
-  }
+  
 
   showItems();
 

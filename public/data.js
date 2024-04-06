@@ -13,16 +13,32 @@ async function getBooks(renderFun){
     renderFun(books);
 }
 
-async function getReviews(isbn, renderFun){
-    const reviewsRef = collection(db, 'reviews');
-    const querySnapshot = await getDocs(reviewsRef);
-    const reviews = [];
-    querySnapshot.forEach((doc) => {
-        if (doc.data().isbn === isbn) {
-            reviews.push(doc.data());
-        }
+async function getFavorites(uid, drawCard){
+    console.log("in getfavorites");
+    const favdb = collection(db, `/users/${uid}/favorites`);
+    const favDocs = await getDocs(favdb);
+    const favorites = [];
+    favDocs.forEach((doc) => {
+            favorites.push(doc.data());
+            
     });
-    renderFun(reviews);
+
+    const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
+    const data = await response.json();
+    let favItems = [];
+    console.log("Favorites coming up");
+    console.log(favorites);
+    for(let rec of favorites){
+      console.log(rec.id);
+      for(let item of data){
+        if(rec.id === item._id){
+            favItems.push(item);
+        }
+      }
+    }
+    console.log("Fav Items coming up");
+    console.log(favItems);
+    drawCard(favItems);
 }
 
 async function createReview(auth, isbn, text){
@@ -57,4 +73,4 @@ async function favorite(uid, id){
     addDoc(collection(db, `/users/${uid}/favorites`), obj)
   }
 
-export {getBooks, getReviews, createReview, deleteReview, favorite} ;
+export {getBooks, getFavorites, createReview, deleteReview, favorite} ;
