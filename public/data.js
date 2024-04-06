@@ -66,11 +66,25 @@ async function deleteReview(auth, reviewId){
     }
 }
 
-async function favorite(uid, id){
+async function favorite(uid, id, addToFavoritesPopup, name){
+    const favdb = collection(db, `/users/${uid}/favorites`);
+    const favDocs = await getDocs(favdb);
+    const favorites = [];
+    favDocs.forEach((doc) => {
+            favorites.push(doc.data());
+    });
+    for(let fav of favorites){
+        if(fav.id === id){
+            addToFavoritesPopup(name, "true");
+            return;
+        }
+    }
+
+    addToFavoritesPopup(name, "false");
     const obj = {
       id: id
     };
-    addDoc(collection(db, `/users/${uid}/favorites`), obj)
+    addDoc(collection(db, `/users/${uid}/favorites`), obj);
   }
 
 export {getBooks, getFavorites, createReview, deleteReview, favorite} ;
