@@ -219,7 +219,7 @@
     }
 
     #full-page-element {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 20%;
@@ -357,18 +357,14 @@
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
   function setLoggedInUI(){
-          document.querySelector('#login-button').innerHTML = "Log out";
-          document.querySelector('#login-button').onclick = logout;
-          document.getElementById('login-dialog').style.display = 'none';
-         // document.querySelector('#loginBtn').style.display = 'none';
-        //  document.querySelector('#logoutBtn').style.display = 'inline-block';
-      }
+    document.querySelector('#login-button').innerHTML = "Log out";
+    document.querySelector('#login-button').onclick = logout;
+    document.getElementById('login-dialog').style.display = 'none';
+  }
   function setLoggedOutUI(){
-          document.querySelector('#login-button').innerHTML = "Log in";
-          document.querySelector('#login-button').onclick = showLoginDialog;
-          
-        //  document.querySelector('#logoutBtn').style.display = 'inline-block';
-      }
+    document.querySelector('#login-button').innerHTML = "Log in";
+    document.querySelector('#login-button').onclick = showLoginDialog;
+ }
 
   async function realSignIn(){
       console.log("hi");
@@ -384,21 +380,45 @@
       }
   }
 
-  function addFavorite(id){
+  function addFavorite(id, name){
     //Implement error if already favorited
     console.log("got in teh favorite functin e ya");
     let uid = auth.currentUser.uid;
     console.log("uid is")
     console.log(uid);
-    favorite(uid, id);
+    favorite(uid, id, addToFavoritesPopup, name);
     console.log("faorite hopefully added");
   }
+
+  function addToFavoritesPopup(itemName, isAlreadyAdded) {
+     var popup = document.createElement('div');
+     popup.style.position = 'fixed';
+     popup.style.bottom = '20px';
+     popup.style.left = '25%';
+     popup.style.padding = '10px';
+     popup.style.color = 'white';
+     popup.style.borderRadius = '5px';
+
+     if(isAlreadyAdded === "true"){
+      popup.style.backgroundColor = 'red';
+      popup.innerHTML = itemName + ' has already been added to favorites';
+     } else {
+      popup.style.backgroundColor = 'green';
+      popup.innerHTML = itemName + ' has been added to favorites';
+     }
+     document.body.appendChild(popup);
+
+     setTimeout(function() {
+       document.body.removeChild(popup);
+     }, 3000);
+   }
 
   async function showFavorites() {
     //IMplement errro thing if not logged in
     getFavorites(auth.currentUser.uid, drawCard);
   }
 
+  window.addToFavoritesPopup = addToFavoritesPopup;
   window.showFavorites = showFavorites;
   window.addFavorite = addFavorite;
   window.realSignIn = realSignIn;
@@ -505,7 +525,7 @@
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
         <button class="build-button"></button>
-        <button class="favorite-button" onclick="addToFavorites('${rec.itemName}')" onclick="addFavorite('${rec._id}')"></button>
+        <button class="favorite-button" onclick="addFavorite('${rec._id}', '${rec.itemName}')"></button>
     </div>
   </div>`;
           }
@@ -542,24 +562,7 @@
       }
   })
 
-  function addToFavorites(itemName) {
-     var popup = document.createElement('div');
-     popup.style.position = 'fixed';
-     popup.style.bottom = '20px';
-     popup.style.left = '25%';
-     popup.style.padding = '10px';
-     popup.style.backgroundColor = 'green';
-     popup.style.color = 'white';
-     popup.style.borderRadius = '5px';
-
-     popup.innerHTML = itemName + ' has been added to favorites';
-
-     document.body.appendChild(popup);
-
-     setTimeout(function() {
-       document.body.removeChild(popup);
-     }, 3000);
-   }
+  
   
   
 </script>
