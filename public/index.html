@@ -277,6 +277,10 @@
         border-radius: 5px;
     }
 
+    .build-button:active{
+      background-color: #7a2424;
+    }
+
     .favorite-button {
         padding: 20px 20px;
         border: none;
@@ -288,6 +292,10 @@
         color: black;
         transform: rotate(45deg);
         border-radius: 5px;
+    }
+
+    .favorite-button:active{
+      background-color: #c0a407;
     }
 
   </style>
@@ -524,6 +532,25 @@
           document.getElementById('error-message').style.display = 'none';
       }
   })
+
+  function addToFavorites(itemName) {
+	   var popup = document.createElement('div');
+	   popup.style.position = 'fixed';
+	   popup.style.bottom = '20px';
+	   popup.style.right = '20px';
+	   popup.style.padding = '10px';
+	   popup.style.backgroundColor = 'green';
+	   popup.style.color = 'white';
+	   popup.style.borderRadius = '5px';
+
+	   popup.innerHTML = itemName + ' has been added to favorites';
+
+	   document.body.appendChild(popup);
+
+	   setTimeout(function() {
+	     document.body.removeChild(popup);
+	   }, 3000);
+	 }
   
 </script>
 
