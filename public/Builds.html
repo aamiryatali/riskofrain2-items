@@ -46,6 +46,28 @@
       const data = await response.json();
       return data;
   }
+
+   async function showItems() {
+      state = await getData();
+      drawCard(state);
+  }
+
+  showItems();
+
+  function filterBy(filter){
+      if(filter === 'All'){
+          return drawCard();
+      }
+
+      let filtered = [];
+
+      for (let rec of state) {
+          if (rec.rarity === filter)
+              filtered.push(rec);
+      }
+
+      draw(filtered);
+  }
     
   </script>
 
