@@ -277,10 +277,6 @@
         border-radius: 5px;
     }
 
-    .build-button:active{
-      background-color: #7a2424;
-    }
-
     .favorite-button {
         padding: 20px 20px;
         border: none;
@@ -292,10 +288,6 @@
         color: black;
         transform: rotate(45deg);
         border-radius: 5px;
-    }
-
-    .favorite-button:active{
-      background-color: #c0a407;
     }
 
   </style>
@@ -363,7 +355,6 @@
         //  document.querySelector('#logoutBtn').style.display = 'inline-block';
       }
   function setLoggedOutUI(){
-    console.log("there you go ");
           document.querySelector('#login-button').innerHTML = "login";
           document.querySelector('#login-button').onclick = realSignIn;
          // document.querySelector('#loginBtn').style.display = 'none';
@@ -371,17 +362,26 @@
       }
 
   async function realSignIn(){
+      console.log("hi");
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
-      await signIn(auth, username, password);
+      let user = await signIn(auth, username, password);
+      
+      console.log("hi2");
+      console.log(auth);
+      console.log(username);
+      console.log(password);
+      console.log(user.uid);
   }
 
   function addFavorite(id){
+    console.log("got in teh favorite functin e ya");
     let uid = auth.currentUser.uid;
+    console.log("uid is")
     console.log(uid);
     favorite(uid, id);
+    console.log("faorite hopefully added");
   }
-
   window.addFavorite = addFavorite;
   window.realSignIn = realSignIn;
 </script>
@@ -532,25 +532,6 @@
           document.getElementById('error-message').style.display = 'none';
       }
   })
-
-  function addToFavorites(itemName) {
-	   var popup = document.createElement('div');
-	   popup.style.position = 'fixed';
-	   popup.style.bottom = '20px';
-	   popup.style.right = '20px';
-	   popup.style.padding = '10px';
-	   popup.style.backgroundColor = 'green';
-	   popup.style.color = 'white';
-	   popup.style.borderRadius = '5px';
-
-	   popup.innerHTML = itemName + ' has been added to favorites';
-
-	   document.body.appendChild(popup);
-
-	   setTimeout(function() {
-	     document.body.removeChild(popup);
-	   }, 3000);
-	 }
   
 </script>
 
