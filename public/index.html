@@ -327,7 +327,7 @@
 </nav>
   
 <div class="login-dialog" id="login-dialog">
-  <form onsubmit="return validateLogin()">
+  <form>
     <input type="text" id="user" placeholder="Username">
     <input type="password" id="pass" placeholder="Password">
     <button type="button" onclick="realSignIn()">Log in</button>
@@ -349,15 +349,16 @@
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
   function setLoggedInUI(){
-          document.querySelector('#login-button').innerHTML = "logout";
+          document.querySelector('#login-button').innerHTML = "Log out";
           document.querySelector('#login-button').onclick = logout;
+          document.getElementById('login-dialog').style.display = 'none';
          // document.querySelector('#loginBtn').style.display = 'none';
         //  document.querySelector('#logoutBtn').style.display = 'inline-block';
       }
   function setLoggedOutUI(){
-          document.querySelector('#login-button').innerHTML = "login";
-          document.querySelector('#login-button').onclick = realSignIn;
-         // document.querySelector('#loginBtn').style.display = 'none';
+          document.querySelector('#login-button').innerHTML = "Log in";
+          document.querySelector('#login-button').onclick = showLoginDialog;
+          
         //  document.querySelector('#logoutBtn').style.display = 'inline-block';
       }
 
@@ -365,13 +366,14 @@
       console.log("hi");
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
-      let user = await signIn(auth, username, password);
-      
-      console.log("hi2");
-      console.log(auth);
-      console.log(username);
-      console.log(password);
-      console.log(user.uid);
+      const user = await signIn(auth, username, password);
+      //Shows error message even on successful login because
+      //await is not doing what await should do :)
+      console.log("in validate");
+      if (user === null) {
+          console.log("true");
+          document.getElementById('error-message').style.display = 'block'; // Show error message
+      }
   }
 
   function addFavorite(id){
@@ -385,23 +387,13 @@
   window.addFavorite = addFavorite;
   window.realSignIn = realSignIn;
 </script>
+
 <script>
   function showLoginDialog() {
+      console.log("login dialog called");
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';
       document.getElementById('error-message').style.display = 'none'; // Hide error message initially
-  }
-
-  function validateLogin() {
-      var username = document.getElementById('username').value;
-      var password = document.getElementById('password').value;
-
-      // Check if username and password are correct (to replace)
-      if (username !== 'correct_username' || password !== 'correct_password') {
-          document.getElementById('error-message').style.display = 'block'; // Show error message
-          return false; // Prevent form submission
-      }
-      return true; // Allow form submission
   }
 
   let state = [];
@@ -481,13 +473,13 @@
 
   function itemDesc(item){
       let result = document.querySelector('#item-desc');
-
+      document.querySelector('.container').style['margin-left'] = '25%';
       let html = '';
     
       for(let rec of state){
           if(rec._id === item){
               html += `<div id="full-page-element">
-    <button onclick="closeItemDesc()">X</button>
+    <button onclick="closeItemDesc()" class="x">X</button>
     <br><br>
     <p>${rec.itemName}</p>
     <img src="${rec.itemImage}" alt="${rec.itemName}">
@@ -523,6 +515,7 @@
 
   function closeItemDesc() {
       document.querySelector('#item-desc').innerHTML = '';
+      document.querySelector('.container').style['margin-left'] = '0%';
   }
 
   document.body.addEventListener('click', function(event) {
