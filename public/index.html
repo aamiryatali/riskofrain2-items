@@ -270,13 +270,17 @@
         cursor: pointer;
         font-size: 16px;
         font-weight: bold;
-        background-color: brown;
+        background-color: #C4A484;
         color: white;
         border-radius: 5px;
+        background-image: url('https://media.discordapp.net/attachments/696252800509804584/1226027170502283264/build.png?ex=662345c7&is=6610d0c7&hm=b54ca28dccbc2e3a25bd833996bc2daf84c0b926df4e6c84f3ae454491fe364d&=&format=webp&quality=lossless&width=576&height=576');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .build-button:active{
-      background-color: #7a2424;
+      background-color: #86705b;
     }
 
     .favorite-button {
@@ -284,16 +288,24 @@
         border: none;
         margin: 0 10px;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 50px;
         font-weight: bold;
-        background-color: gold;
-        color: black;
-        transform: rotate(45deg);
+        background-color: transparent;
+        color: gold;
         border-radius: 5px;
+        position: relative;
     }
 
-    .favorite-button:active{
-      background-color: #c0a407;
+    .favorite-button::before {
+        content: '\2605';
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .favorite-button:active {
+        color: #c0a407;
     }
 
   </style>
