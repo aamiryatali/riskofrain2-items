@@ -497,7 +497,7 @@
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
         <button class="build-button"></button>
-        <button class="favorite-button" onclick="addFavorite('${rec._id}')"></button>
+        <button class="favorite-button" onclick="addToFavorites('${rec.itemName}')" onclick="addFavorite('${rec._id}')"></button>
     </div>
   </div>`;
           }
@@ -533,6 +533,25 @@
           document.getElementById('error-message').style.display = 'none';
       }
   })
+
+  function addToFavorites(itemName) {
+     var popup = document.createElement('div');
+     popup.style.position = 'fixed';
+     popup.style.bottom = '20px';
+     popup.style.right = '20px';
+     popup.style.padding = '10px';
+     popup.style.backgroundColor = 'green';
+     popup.style.color = 'white';
+     popup.style.borderRadius = '5px';
+
+     popup.innerHTML = itemName + ' has been added to favorites';
+
+     document.body.appendChild(popup);
+
+     setTimeout(function() {
+       document.body.removeChild(popup);
+     }, 3000);
+   }
   
 </script>
 
