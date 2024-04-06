@@ -370,6 +370,7 @@
     document.querySelector('#login-button').innerHTML = "Log out";
     document.querySelector('#login-button').onclick = logout;
     document.getElementById('login-dialog').style.display = 'none';
+    showFavorites();
   }
   function setLoggedOutUI(){
     document.querySelector('#login-button').innerHTML = "Log in";
@@ -377,27 +378,26 @@
  }
 
   async function realSignIn(){
-      console.log("hi");
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
       const user = await signIn(auth, username, password);
       //Shows error message even on successful login because
       //await is not doing what await should do :)
-      console.log("in validate");
       if (user === null) {
-          console.log("true");
           document.getElementById('error-message').style.display = 'block'; // Show error message
       }
   }
 
-  function addFavorite(id, name){
+  async function addFavorite(id, name){
     let user = auth.currentUser;
     if(user === null){
       alert("Please log in to add and view favorites!");
       return;
     }
     let uid = auth.currentUser.uid;
-    favorite(uid, id, addToFavoritesPopup, name);
+    await favorite(uid, id, addToFavoritesPopup, name);
+    console.log("got past favorite call");
+    showFavorites();
   }
 
   function addToFavoritesPopup(itemName, isAlreadyAdded) {
@@ -411,7 +411,7 @@
 
      if(isAlreadyAdded === "true"){
       popup.style.backgroundColor = 'red';
-      popup.innerHTML = itemName + ' has already been added to favorites';
+      popup.innerHTML = itemName + ' has been removed from favorites';
      } else {
       popup.style.backgroundColor = 'green';
       popup.innerHTML = itemName + ' has been added to favorites';
@@ -427,10 +427,12 @@
     let user = auth.currentUser;
     if(user === null){
       alert("Please log in to add and view favorites!");
+      console.log("returning null");
       return;
     }
     getFavorites(auth.currentUser.uid, drawCard);
   }
+
   
   window.addToFavoritesPopup = addToFavoritesPopup;
   window.showFavorites = showFavorites;
@@ -440,7 +442,6 @@
 
 <script>
   function showLoginDialog() {
-      console.log("login dialog called");
       var dialog = document.getElementById('login-dialog');
       dialog.style.display = 'block';
       document.getElementById('error-message').style.display = 'none'; // Hide error message initially
@@ -448,49 +449,7 @@
 
   let state = [];
 
-  function drawCard(records){
-      let result = document.querySelector('.container');
-      let html = '';
-
-      for(let rec of records){
-        if(rec.rarity === 'Common'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-      for(let rec of records){
-        if(rec.rarity === 'Uncommon'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid #00c853;" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-      for(let rec of records){
-        if(rec.rarity === 'Legendary'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-      for(let rec of records){
-        if(rec.rarity === 'Boss'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-      for(let rec of records){
-        if(rec.rarity === 'Lunar'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-      for(let rec of records){
-        if(rec.rarity === 'Void'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-      for(let rec of records){
-        if(rec.rarity === 'Equipment'){
-          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
-        }
-      }
-
-      html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`
-      result.innerHTML = html;
-  }
+ 
 
   async function getData() {
       const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
@@ -569,6 +528,52 @@
       }
   })
 
+  function drawCard(records){
+    console.log("draw cards called");
+      let result = document.querySelector('.container');
+      let html = '';
+
+      for(let rec of records){
+        if(rec.rarity === 'Common'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Uncommon'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #00c853;" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Legendary'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Boss'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Lunar'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Void'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Equipment'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
+        }
+      }
+
+      html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`
+      result.innerHTML = html;
+  }
+
+  window.drawCard = drawCard;
 </script>
 
 </body>

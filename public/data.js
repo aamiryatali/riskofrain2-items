@@ -14,7 +14,6 @@ async function getBooks(renderFun){
 }
 
 async function getFavorites(uid, drawCard){
-    console.log("in getfavorites");
     const favdb = collection(db, `/users/${uid}/favorites`);
     const favDocs = await getDocs(favdb);
     const favorites = [];
@@ -26,18 +25,13 @@ async function getFavorites(uid, drawCard){
     const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
     const data = await response.json();
     let favItems = [];
-    console.log("Favorites coming up");
-    console.log(favorites);
     for(let rec of favorites){
-      console.log(rec.id);
       for(let item of data){
         if(rec.itemID === item._id){
             favItems.push(item);
         }
       }
     }
-    console.log("Fav Items coming up");
-    console.log(favItems);
     drawCard(favItems);
 }
 
@@ -72,7 +66,6 @@ async function favorite(uid, id, addToFavoritesPopup, name){
     const favorites = [];
     let found = false;
     favDocs.forEach((doc) => {
-            console.log(doc.id);
             if(doc.data().itemID === id){
                 addToFavoritesPopup(name, "true");
                 deleteDoc(doc.ref)
@@ -83,10 +76,9 @@ async function favorite(uid, id, addToFavoritesPopup, name){
     });
     
     if(found === true){
-        return true;
+        return;
     }
 
-    console.log("you were not supposed to be here");
     addToFavoritesPopup(name, "false");
     const obj = {
       itemID: id
