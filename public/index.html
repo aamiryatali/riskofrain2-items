@@ -345,27 +345,36 @@
   
 <script type="module">
   import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
-  
-  setAuthListeners(setLoggedInUI);
+  import {favorite} from './data.js';
+  setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
   function setLoggedInUI(){
-          document.querySelector('#logbutton').innerHTML = "logout";
-          document.querySelector('#loginBtn').style.display = 'none';
-          document.querySelector('#logoutBtn').style.display = 'inline-block';
+          document.querySelector('#login-button').innerHTML = "logout";
+          document.querySelector('#login-button').onclick = logout;
+         // document.querySelector('#loginBtn').style.display = 'none';
+        //  document.querySelector('#logoutBtn').style.display = 'inline-block';
+      }
+  function setLoggedOutUI(){
+    console.log("there you go ");
+          document.querySelector('#login-button').innerHTML = "login";
+          document.querySelector('#login-button').onclick = realSignIn;
+         // document.querySelector('#loginBtn').style.display = 'none';
+        //  document.querySelector('#logoutBtn').style.display = 'inline-block';
       }
 
   async function realSignIn(){
-      console.log("hi");
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
       await signIn(auth, username, password);
-      
-      console.log("hi2");
-      console.log(auth);
-      console.log(username);
-      console.log(password);
-      console.log(auth.currentUser.uid);
   }
+
+  function addFavorite(id){
+    let uid = auth.currentUser.uid;
+    console.log(uid);
+    favorite(uid, id);
+  }
+
+  window.addFavorite = addFavorite;
   window.realSignIn = realSignIn;
 </script>
 <script>
@@ -480,7 +489,7 @@
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
         <button class="build-button"></button>
-        <button class="favorite-button" onclick="favorite('${rec._id}')"></button>
+        <button class="favorite-button" onclick="addFavorite('${rec._id}')"></button>
     </div>
   </div>`;
           }

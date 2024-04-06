@@ -16,15 +16,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const user = auth.currentUser;
 
-function setAuthListeners(setLoggedInUI){
+function setAuthListeners(setLoggedInUI, setLoggedOutUI){
   onAuthStateChanged(auth, user => {
     if (user) {
       setLoggedInUI();
       const uid = user.id;
-      console.log("signed in");
+      console.log("ES IT HAPPENED signed in");
       console.log(uid);
     } else {
-      console.log("not signed in");
+      console.log("YOU JUST TRIGGERED not signed in");
+      setLoggedOutUI();
     }
   });
 }

@@ -50,11 +50,11 @@ async function deleteReview(auth, reviewId){
     }
 }
 
-async function favorite(id){
+async function favorite(uid, id){
     const obj = {
       id: id
     };
-    addDoc(collection(db, `/users/${auth.currentUser.uid}/favorites`), reviewData)
+    addDoc(collection(db, `/users/${uid}/favorites`), obj)
   }
 
 export {getBooks, getReviews, createReview, deleteReview, favorite} ;
