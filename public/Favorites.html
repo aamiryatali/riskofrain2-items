@@ -6,7 +6,7 @@
   <title>Risk of Rain 2 Item Browser</title>
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
   <style>
-      body {
+    body {
       margin: 0;
       padding: 0;
       background-color: #1a1a1a;
@@ -137,7 +137,8 @@
       width: 300px;
       padding: 10px;
       border-radius: 5px;
-      border: 1px solid #ccc;
+      background-color: #fffdd1;
+      border: 2px solid #000000;
       margin: 0;
       margin-right: 10px;
       box-sizing: border-box;
@@ -145,16 +146,18 @@
     }
 
     .search-button {
-      background-color: #fffdb0;
-      color: black;
-      border: none;
+      background-color: #7F4EA1;
+      color: white;
+      border: 2px solid black;
       padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 13.5px;
     }
 
     .search-button:hover {
-      background-color: #e0de92;
+      background-color: #5e3a78;
     }
 
     .search-container:hover .search-input {
@@ -218,17 +221,20 @@
 
     #full-page-element {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: inherit;
+      margin-left: 1em;
+      margin-top: 1em;
+      margin-bottom: 0;
       width: 20%;
-      height: 100%;
-      background-color: #333;
+      height: 82%;
+      background-color: #2d2d2d;
+      border: 3px solid #0b89b0;
+      border-radius: 5px;
       z-index: 999;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      padding: 0 20px 0 20px;
     }
 
     #full-page-element img {
@@ -242,19 +248,21 @@
     }
 
     .x {
-      top: 10px;
-      left: 10px;
-      background-color: red;
-      color: white;
+      position: fixed;
+      top: 17%;
+      left: 21.5%;
+      background-color: #0b89b0;
+      color: #fffdb0;
       border: none;
       padding: 5px 10px;
-      border-radius: 50%;
+      font-family: 'Brush Script MT', cursive;
+      border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
     .x:hover {
-      background-color: darkred;
+      background-color: #0da1ce;  
     }
 
     .bottom-buttons {
@@ -291,7 +299,7 @@
         font-size: 50px;
         font-weight: bold;
         background-color: transparent;
-        color: red;
+        color: gold;
         border-radius: 5px;
         position: relative;
     }
@@ -305,7 +313,7 @@
     }
 
     .favorite-button:active {
-        color: #bc0606;
+        color: #c0a407;
     }
 
   </style>
