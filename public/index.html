@@ -146,9 +146,9 @@
     }
 
     .search-button {
-      background-color: #84dded;
+      background-color: #7F4EA1;
       color: white;
-      border: 2px solid #085c86;
+      border: 2px solid black;
       padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
@@ -157,7 +157,7 @@
     }
 
     .search-button:hover {
-      background-color: #e0de92;
+      background-color: #5e3a78;
     }
 
     .search-container:hover .search-input {
@@ -316,6 +316,31 @@
         color: #c0a407;
     }
 
+    .build-dialog {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 1000;
+      color: white;
+    }
+
+    .build-dialog-content {
+      text-align: center;
+    }
+
+    .build-dialog-dropdown {
+      margin-bottom: 10px;
+    }
+
+    .build-dialog-input {
+      margin-bottom: 10px;
+    }
+
   </style>
 </head>
 <body>
@@ -324,7 +349,7 @@
   <div id="nav-div" onclick="window.location.href='index.html'">
       <img src="https://preview.redd.it/game-logo-without-text-v0-br9t9i2qyuqb1.png?width=384&format=png&auto=webp&s=26702089060566395aa707d79f49706485f33aa4" alt="Risk of Rain 2 Logo">
   </div>
-  
+
   <div id="nav-buttons">
     <div class="accordion">
       <button>Items</button>
@@ -339,7 +364,7 @@
         <a href="#" onclick="filterBy('Equipment')">Equipment</a>
       </div>
     </div>
-    
+
     <button onclick="window.location.href='Builds.html'">Builds</button>
     <button onclick="window.location.href='Favorites.html'">Favorites</button>
   </div>
@@ -348,10 +373,10 @@
     <input id="search-key" type="text" class="search-input" placeholder="Search...">
     <button class="search-button" onclick="search()">Search</button>
   </div>
-  
+
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
 </nav>
-  
+
 <div class="login-dialog" id="login-dialog">
   <form>
     <input type="text" id="user" placeholder="Email">
@@ -361,13 +386,37 @@
     <p style="color: black">Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
 </div>
-  
+
 <div id="item-desc">
 </div>
-  
+
 <div class="container">
 </div>
-  
+
+  <div class="build-dialog" id="build-dialog">
+    <div class="build-dialog-content">
+      <h2>Select Build/Create New</h2>
+      <div class="build-dialog-dropdown">
+        <select>
+          <!-- Options will be added via JS -->
+        </select>
+      </div>
+      <div>
+        <p>Adding</p>
+        <img id="build-item-image" src="" alt="Item Image">
+        <p id="build-item-name"></p>
+      </div>
+      <div class="build-dialog-input">
+        <p>Amount</p>
+        <input type="number" id="build-item-amount" value="1">
+      </div>
+      <div class="build-dialog-buttons">
+        <button onclick="cancelBuild()">Cancel</button>
+        <button onclick="confirmBuild()">Confirm</button>
+      </div>
+    </div>
+  </div>
+
 <script type="module">
   import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
   import {getFavorites, favorite} from './data.js';
@@ -494,7 +543,7 @@
           html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">`;
         }
       }
-    
+
       html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`
       result.innerHTML = html;
   }
@@ -531,14 +580,14 @@
       let result = document.querySelector('#item-desc');
       document.querySelector('.container').style['margin-left'] = '25%';
       let html = '';
-    
+
       for(let rec of state){
           if(rec._id === item){
               html += `<div id="full-page-element">
-    
+
     <button onclick="closeItemDesc()" class="x">X</button>
     <br><br>
-    
+
     <p style="font-size: 20px">${rec.itemName}</p>
     <img src="${rec.itemImage}" alt="${rec.itemName}">
     <br>
@@ -546,7 +595,7 @@
     <br>
     <p>Item Description:</p>
     <p>${rec.description}</p>
-    
+
     <p>Stack Type:</p>
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
