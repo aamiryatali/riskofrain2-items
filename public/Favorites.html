@@ -434,6 +434,32 @@
     getFavorites(auth.currentUser.uid, drawCard);
   }
 
+  function search(favArr) {
+    let searchKey = document.querySelector('#search-key').value;
+
+    let results = [];
+    if(searchKey === ""){
+      showFavorites();
+      return;
+    }
+
+    for (let rec of favArr) {
+      let searchText = rec.itemName.toUpperCase();
+      searchKey = searchKey.toUpperCase();
+
+      if (searchText.search(searchKey) !== -1) {
+        results.push(rec);
+      }
+      drawCard(results);
+    }
+  }
+
+  document.querySelector("#search-key").onkeyup=function(){
+      if(event.keyCode==13){
+        let thing = getFavorites(auth.currentUser.uid, search);
+        console.log(thing);
+      }
+  };
   
   window.addToFavoritesPopup = addToFavoritesPopup;
   window.showFavorites = showFavorites;
@@ -450,8 +476,6 @@
 
   let state = [];
 
- 
-
   async function getData() {
       const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
       state = await response.json();
@@ -459,21 +483,6 @@
 
   getData();
   
-  function filterBy(filter){
-      if(filter === 'All'){
-          return drawCard(state);
-      }
-
-      let filtered = [];
-
-      for (let rec of state) {
-          if (rec.rarity === filter)
-              filtered.push(rec);
-      }
-
-      drawCard(filtered);
-  }
-
   function itemDesc(item){
       let result = document.querySelector('#item-desc');
       document.querySelector('.container').style['margin-left'] = '25%';
@@ -500,21 +509,6 @@
       result.innerHTML = html;
   }
 
-  function search() {
-    let searchKey = document.querySelector('#search-key').value;
-
-    let results = [];
-
-    for (let rec of state) {
-      let searchText = rec.itemName.toUpperCase();
-      searchKey = searchKey.toUpperCase();
-
-      if (searchText.search(searchKey) !== -1) {
-        results.push(rec);
-      }
-      drawCard(results);
-    }
-  }
 
   function closeItemDesc() {
       document.querySelector('#item-desc').innerHTML = '';
@@ -574,6 +568,23 @@
       result.innerHTML = html;
   }
 
+  
+  function filterBy(filter){
+      if(filter === 'All'){
+          return drawCard(state);
+      }
+
+      let filtered = [];
+
+      for (let rec of state) {
+          if (rec.rarity === filter)
+              filtered.push(rec);
+      }
+
+      drawCard(filtered);
+  }
+
+  window.search = search;
   window.drawCard = drawCard;
 </script>
 

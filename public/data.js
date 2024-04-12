@@ -13,7 +13,7 @@ async function getBooks(renderFun){
     renderFun(books);
 }
 
-async function getFavorites(uid, drawCard){
+async function getFavorites(uid, doFunction){
     const favdb = collection(db, `/users/${uid}/favorites`);
     const favDocs = await getDocs(favdb);
     const favorites = [];
@@ -32,7 +32,8 @@ async function getFavorites(uid, drawCard){
         }
       }
     }
-    drawCard(favItems);
+    doFunction(favItems);
+    return favItems;
 }
 
 async function createReview(auth, isbn, text){
