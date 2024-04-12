@@ -329,6 +329,11 @@
       color: white;
     }
 
+    .build-dialog img {
+      max-width: 50%;
+      max-height: 50%;
+    }
+
     .build-dialog-content {
       text-align: center;
     }
@@ -397,29 +402,28 @@
     <div class="build-dialog-content">
       <h2>Select Build/Create New</h2>
       <div class="build-dialog-dropdown">
-        <select>
+        <select id="build-list" onchange="checkValue(event)">
           <!-- Options will be added via JS -->
         </select>
       </div>
-      <div>
+      <div id="build-image-section">
         <p>Adding</p>
         <img id="build-item-image" src="" alt="Item Image">
-        <p id="build-item-name"></p>
+        <p id="build-item-name" style="display: inline-block; padding-bottom: 1em;"></p>
       </div>
-      <div class="build-dialog-input">
+      <div class="build-dialog-input" id="build-dialog-input">
         <p>Amount</p>
         <input type="number" id="build-item-amount" value="1">
       </div>
-      <div class="build-dialog-buttons">
-        <button onclick="cancelBuild()">Cancel</button>
-        <button onclick="confirmBuild()">Confirm</button>
+      <div class="build-dialog-buttons" id="build-dialog-buttons">
+        
       </div>
     </div>
   </div>
 
 <script type="module">
   import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
-  import {getFavorites, favorite} from './data.js';
+  import {getBuilds, addToBuild, getFavorites, favorite, createBuild} from './data.js';
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
   function setLoggedInUI(){
@@ -488,6 +492,96 @@
     getFavorites(auth.currentUser.uid, drawCard);
   }
 
+  var buildItemID;
+  var buildItemName;
+  var buildItemImage;
+
+  async function showBuildDialog(id, itemName, itemImage){
+    console.log("build dialog function inside yes");
+    buildItemID = id;
+    buildItemName = itemName;
+    buildItemImage = itemImage;
+    var dialog = document.getElementById('build-dialog');
+    var name = GetElementInsideContainer("build-dialog", "build-item-name");
+    var image = GetElementInsideContainer("build-dialog", "build-item-image");
+    var buttons = GetElementInsideContainer("build-dialog", "build-dialog-buttons");
+   
+    buttons.innerHTML = `
+        <button onclick="cancelBuild()">Cancel</button>
+        <button onclick="realAddToBuild('new build', 'not a real ID', '10')">Confirm</button>
+    `;
+    let uid = auth.currentUser.uid;
+    getBuilds(uid, listBuilds);
+
+    
+    name.innerHTML = `${itemName}`;
+    image.src = `${itemImage}`;
+    dialog.style.display = 'block';
+  }
+
+  async function createNewBuildDialog(){
+    var name = GetElementInsideContainer("build-dialog", "build-item-name");
+    var image = GetElementInsideContainer("build-dialog", "build-image-section");
+    var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
+    var buttons = GetElementInsideContainer("build-dialog", "build-dialog-buttons");
+    name.style.display = "none";
+    image.style.display = "none";
+    input.innerHTML = `
+      <p>Enter new build name</p>
+      <input type="text" id="build-item-newname">
+    `;
+    buttons.innerHTML = `
+        <button onclick="showBuildDialog()">Cancel</button>
+        <button onclick="createNewBuild('${document.querySelector("#build-item-newname").value}')">Confirm</button>
+    `;
+  }
+
+  async function checkValue(event){
+    if(event.target.value === "createBuild"){
+      createNewBuildDialog();
+    } else {
+      console.log("sadge");
+      var name = GetElementInsideContainer("build-dialog", "build-item-name");
+      var image = GetElementInsideContainer("build-dialog", "build-image-section");
+      var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
+      input.innerHTML = `
+      <p>Enter new build name</p>
+      <input type="text" id="build-item-newname">
+      `;
+      name.style.display = "block";
+      image.style.display = "inline-block";
+    }
+  }
+
+  async function listBuilds(builds){
+    var list = GetElementInsideContainer("build-dialog", "build-list");
+    list.innerHTML = ``;
+    for(let build of builds){
+      list.innerHTML += `
+        <option value=${build}>${build}</option>
+      `;
+    }
+    list.innerHTML += `
+    <option value="createBuild" onclick="createNewBuildDialog()">Create New Build</option>`;
+  }
+
+  async function createNewBuild(buildName){
+    console.log("new build name is");
+    console.log(buildName);
+    let uid = auth.currentUser.uid;
+    createBuild(uid, buildName);
+  }
+
+  async function realAddToBuild(buildID, itemID, itemAmt){
+    console.log("in realAddToBuild");
+    let uid = auth.currentUser.uid;
+    addToBuild(uid, buildID, itemID, itemAmt);
+  }
+
+  window.checkValue = checkValue;
+  window.showBuildDialog = showBuildDialog;
+  window.realAddToBuild = realAddToBuild;
+  window.createNewBuild = createNewBuild;
   window.addToFavoritesPopup = addToFavoritesPopup;
   window.showFavorites = showFavorites;
   window.addFavorite = addFavorite;
@@ -495,6 +589,8 @@
 </script>
 
 <script>
+  let state = [];
+
   function showLoginDialog() {
       console.log("login dialog called");
       var dialog = document.getElementById('login-dialog');
@@ -502,7 +598,20 @@
       document.getElementById('error-message').style.display = 'none'; // Hide error message initially
   }
 
-  let state = [];
+ 
+
+  function GetElementInsideContainer(containerID, childID) {
+    var elm = {};
+    var elms = document.getElementById(containerID).getElementsByTagName("*");
+    for (var i = 0; i < elms.length; i++) {
+        if (elms[i].id === childID) {
+            elm = elms[i];
+            break;
+        }
+    }
+    return elm;
+  }
+
 
   function drawCard(records){
       let result = document.querySelector('.container');
@@ -599,7 +708,7 @@
     <p>Stack Type:</p>
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
-        <button class="build-button onclick="buildDialog()""></button>
+        <button class="build-button" onclick="showBuildDialog('${rec._id}', '${rec.itemName}', '${rec.itemImage}')"></button>
         <button class="favorite-button" onclick="addFavorite('${rec._id}', '${rec.itemName}')"></button>
     </div>
   </div>`;

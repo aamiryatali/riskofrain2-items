@@ -1,16 +1,59 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getFirestore, collection, getDoc, addDoc, getDocs, deleteDoc, doc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { getFirestore, collection, getDoc, addDoc, getDocs, deleteDoc, doc, setDoc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import firebaseConfig from "./firebaseConfig.js";
 
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+async function createBuild(uid, buildName){
+    console.log("inside createBuild");
+    await setDoc(doc(db, `/users/${uid}/builds/`, `${buildName}`), {
+            emptyItem: {
+                amount: 0,
+                itemID: "null"
+            }
+      });
+}
 
-async function getBooks(renderFun){
-    let response = await fetch('/books.json');
-    let books = await response.json();
-    renderFun(books);
+async function addToBuild(uid, buildID, itemID, itemAmt){
+    console.log("in addToBuild");
+    const builddb = collection(db, `/users/${uid}/builds/${buildID}/items/`);
+    const buildDocs = await getDocs(builddb);
+    const buildItems = [];
+    buildDocs.forEach((doc) => {
+       /* if(doc.data().itemID === itemID){
+            deleteDoc(doc.ref)
+            found = true;
+        } else {*/
+            buildItems.push(doc.data());
+        //}
+    });
+
+    const obj = {
+        amount: itemAmt,
+        itemID: itemID
+    };
+
+    /*if(found === true){
+        return;
+    }*/
+    console.log("logging build items");
+    console.log(buildItems);
+    addDoc(collection(db, `/users/${uid}/builds/${buildID}/items/`), obj);
+}
+
+async function getBuilds(uid, doFunction){
+    const builddb = collection(db, `/users/${uid}/builds/`);
+    const buildDocs = await getDocs(builddb);
+    const builds = [];
+    buildDocs.forEach((doc) => {
+            builds.push(doc.id);
+            
+    });
+    console.log("logging build names");
+    console.log(builds);
+    doFunction(builds);
 }
 
 async function getFavorites(uid, doFunction){
@@ -34,31 +77,6 @@ async function getFavorites(uid, doFunction){
     }
     doFunction(favItems);
     return favItems;
-}
-
-async function createReview(auth, isbn, text){
-    const reviewData = {
-        isbn: isbn,
-        text: text,
-        userId: auth.currentUser.uid,
-        reviewer: "yeah"
-    };
-    console.log(reviewData);
-    addDoc(collection(db, `users/${auth.currentUser.uid}/reviews`), reviewData)
-}
-
-async function deleteReview(auth, reviewId){
-    const reviewRef = doc(db, 'reviews', reviewId);
-    const reviewDoc = await getDoc(reviewRef);
-    
-    if (reviewDoc.exists() && reviewDoc.data().userId === auth.currentUser.uid) {
-        await deleteDoc(reviewRef);
-        console.log("Review deleted successfully");
-        return true;
-    } else {
-        console.log("Review not found or you don't have permission to delete it");
-        return false;
-    }
 }
 
 async function favorite(uid, id, addToFavoritesPopup, name){
@@ -87,4 +105,4 @@ async function favorite(uid, id, addToFavoritesPopup, name){
     addDoc(collection(db, `/users/${uid}/favorites`), obj);
   }
 
-export {getBooks, getFavorites, createReview, deleteReview, favorite} ;
+export {getBuilds, addToBuild, createBuild, getFavorites, favorite} ;
