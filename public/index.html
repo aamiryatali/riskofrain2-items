@@ -521,7 +521,7 @@
 
   async function showBuildDialog(itemID, itemName, itemImage){
     buildItemID = itemID;
-    buildItemName = itemName;
+    buildItemName = decodeURIComponent(itemName);
     buildItemImage = itemImage;
     var dialog = document.getElementById('build-dialog');
     var name = GetElementInsideContainer("build-dialog", "build-item-name");
@@ -530,13 +530,14 @@
     var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
 
     buttons.innerHTML = `
-        <button style="background-color: #ff6f61; color: white;" onclick="cancelBuild()">Cancel</button>
+        <button style="background-color: #ff6f61; color: white;" onclick="document.getElementById('build-dialog').style.display='none'">Cancel</button>
         <button style="background-color: #98ff98; color: black;" onclick="realAddToBuild('${itemID}')">Confirm</button>
     `;
     let uid = auth.currentUser.uid;
     getBuilds(uid, listBuilds);
     
-    name.innerHTML = `${itemName}`;
+    
+    name.innerHTML = `${buildItemName}`;
     image.src = `${itemImage}`;
     dialog.style.display = 'block';
   }
@@ -612,12 +613,12 @@
   }
 
   async function realAddToBuild(itemID){
-    
     var itemAmt = document.querySelector('#build-item-newname').value;
     console.log("printing iewftem amiunt");
     console.log(itemAmt);
     let uid = auth.currentUser.uid;
     addToBuild(uid, currListValue, itemID, itemAmt);
+    document.querySelector('#build-dialog').style.display = "none";
   }
 
   window.checkValue = checkValue;
@@ -695,7 +696,7 @@
         }
       }
 
-      html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`
+      html += `<img onclick="window.location.href='Vro.html' "src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid orange;">`;
       result.innerHTML = html;
   }
 
@@ -727,6 +728,19 @@
       drawCard(filtered);
   }
 
+  //This function replaces apostophes with their UTF-8 equivalents.
+  //The only reason we needed this is because some of the names in the API
+  //contained an apostrophe, and in the itemDesc function below, that would
+  //cause certain strings to end early in an onclick function. And we had already
+  //used a `, " and ' so we needed to find a way to pass the name without
+  //having any quotes in it. The name would then be decoded 
+  //inside the function it was passed to.
+  function fixedEncodeURIComponent(src) {
+    return encodeURIComponent(src).replace(/[']/g, function (c) {
+        return '%' + c.charCodeAt(0).toString(16);
+    });
+}
+
   function itemDesc(item){
       let result = document.querySelector('#item-desc');
       document.querySelector('.container').style['margin-left'] = '25%';
@@ -734,6 +748,7 @@
 
       for(let rec of state){
           if(rec._id === item){
+            var itemName = fixedEncodeURIComponent(`${rec.itemName}`);
               html += `<div id="full-page-element">
 
     <button onclick="closeItemDesc()" class="x">X</button>
@@ -750,12 +765,13 @@
     <p>Stack Type:</p>
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
-        <button class="build-button" onclick="showBuildDialog('${rec._id}', '${rec.itemName}', '${rec.itemImage}')"></button>
+        <button class="build-button" onclick="showBuildDialog('${rec._id}', '${itemName}', '${rec.itemImage}')"></button>
         <button class="favorite-button" onclick="addFavorite('${rec._id}', '${rec.itemName}')"></button>
     </div>
   </div>`;
           }
-      }
+      } //The onclick="showBuildDialog('${rec.itemName}')" was what did not work when the name
+      //had an ' in it.
       result.innerHTML = html;
   }
 
@@ -786,7 +802,7 @@
           dialog.style.display = 'none';
           document.getElementById('error-message').style.display = 'none';
       }
-  })
+  });
 
 </script>
 
