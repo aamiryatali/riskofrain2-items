@@ -13,6 +13,12 @@ async function getData() {
 
 getData();
 
+function fixedEncodeURIComponent(src) {
+  return encodeURIComponent(src).replace(/[']/g, function (c) {
+      return '%' + c.charCodeAt(0).toString(16);
+  });
+}
+
 function itemDesc(item){
     let result = document.querySelector('#item-desc');
     document.querySelector('.container').style['margin-left'] = '25%';
@@ -20,25 +26,45 @@ function itemDesc(item){
 
     for(let rec of state){
         if(rec._id === item){
+          var itemName = fixedEncodeURIComponent(`${rec.itemName}`);
             html += `<div id="full-page-element">
+
   <button onclick="closeItemDesc()" class="x">X</button>
   <br><br>
-  <p>${rec.itemName}</p>
+
+  <p style="font-size: 20px">${rec.itemName}</p>
   <img src="${rec.itemImage}" alt="${rec.itemName}">
+  <br>
+  <hr style="width: 100%">
+  <br>
   <p>Item Description:</p>
   <p>${rec.description}</p>
+
   <p>Stack Type:</p>
   <p>${rec.stackType}</p>
   <div class="bottom-buttons">
-      <button class="build-button"></button>
+      <button class="build-button" onclick="showBuildDialog('${rec._id}', '${itemName}', '${rec.itemImage}')"></button>
       <button class="favorite-button" onclick="addFavorite('${rec._id}', '${rec.itemName}')"></button>
   </div>
 </div>`;
         }
-    }
+    } 
+    //The onclick="showBuildDialog('${rec.itemName}')" was what did not work when the name
+    //had an ' in it.
     result.innerHTML = html;
 }
 
+function GetElementInsideContainer(containerID, childID) {
+  var elm = {};
+  var elms = document.getElementById(containerID).getElementsByTagName("*");
+  for (var i = 0; i < elms.length; i++) {
+      if (elms[i].id === childID) {
+          elm = elms[i];
+          break;
+      }
+  }
+  return elm;
+}
 
 function closeItemDesc() {
     document.querySelector('#item-desc').innerHTML = '';

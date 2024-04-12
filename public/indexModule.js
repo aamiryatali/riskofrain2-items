@@ -123,7 +123,7 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
       var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
       input.innerHTML = `
       <p>Amount</p>
-      <input type="number" id="build-item-newname">
+      <input type="number" id="build-item-newname" value="1">
       `;
       name.style.display = "flex";
       image.style.display = "flex";

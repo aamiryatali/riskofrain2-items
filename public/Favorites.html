@@ -56,6 +56,29 @@
 
 <div class="container">
 </div>
+
+<div class="build-dialog" id="build-dialog">
+  <div class="build-dialog-content">
+    <h2>Select Build/Create New</h2>
+    <div class="build-dialog-dropdown">
+      <select id="build-list" onchange="checkValue(event)">
+        <!-- Options will be added via JS -->
+      </select>
+    </div>
+    <div id="build-image-section" class="build-container">
+      <img id="build-item-image" src="" alt="Item Image" style="margin-right: 10px;">
+      <p id="build-item-name" style="margin: 0;"></p>
+    </div>
+    <div class="build-dialog-input" id="build-dialog-input">
+      <p>Amount</p>
+      <input type="number" id="build-item-amount" value="1">
+    </div>
+    <div class="build-dialog-buttons" id="build-dialog-buttons">
+      
+    </div>
+  </div>
+</div>
+
 </body>
 
 <script type="module" src="favoritesModule.js"></script>

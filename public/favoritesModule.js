@@ -1,7 +1,11 @@
 import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
-  import {getFavorites, favorite} from './data.js';
+  import {getBuilds, addToBuild, getFavorites, favorite, createBuild} from './data.js';
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
-
+  var buildItemID;
+  var buildItemName;
+  var buildItemImage;
+  var currListValue;
+  
   function setLoggedInUI(){
     document.querySelector('#login-button').innerHTML = "Log out";
     document.querySelector('#login-button').onclick = logout;
@@ -98,6 +102,113 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
       }
   };
   
+  async function showBuildDialog(itemID, itemName, itemImage){
+    console.log('show');
+    buildItemID = itemID;
+    buildItemName = decodeURIComponent(itemName);
+    buildItemImage = itemImage;
+    var dialog = document.getElementById('build-dialog');
+    var name = GetElementInsideContainer("build-dialog", "build-item-name");
+    var image = GetElementInsideContainer("build-dialog", "build-item-image");
+    var buttons = GetElementInsideContainer("build-dialog", "build-dialog-buttons");
+    var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
+
+    buttons.innerHTML = `
+        <button style="background-color: #ff6f61; color: white;" onclick="document.getElementById('build-dialog').style.display='none'">Cancel</button>
+        <button style="background-color: #98ff98; color: black;" onclick="realAddToBuild('${itemID}')">Confirm</button>
+    `;
+    let uid = auth.currentUser.uid;
+    getBuilds(uid, listBuilds);
+    
+    
+    name.innerHTML = `${buildItemName}`;
+    image.src = `${itemImage}`;
+    dialog.style.display = 'block';
+  }
+
+  async function createNewBuildDialog(){
+    var name = GetElementInsideContainer("build-dialog", "build-item-name");
+    var image = GetElementInsideContainer("build-dialog", "build-image-section");
+    var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
+    var buttons = GetElementInsideContainer("build-dialog", "build-dialog-buttons");
+    name.style.display = "none";
+    image.style.display = "none";
+    input.innerHTML = `
+      <p>Enter new build name</p>
+      <input type="text" id="build-item-newname">
+    `;
+    
+    buttons.innerHTML = `
+        <button style="background-color: #ff6f61; color: white;" onclick="showBuildDialog()">Cancel</button>
+        <button style="background-color: #98ff98; color: black;" onclick="createNewBuild()">Confirm</button>
+    `;
+  }
+
+  async function checkValue(event){
+    if(event.target.value === "createBuild"){
+      createNewBuildDialog();
+    } else {
+      var list = document.getElementById('build-list');
+      currListValue = list.options[list.selectedIndex].value;
+      console.log("currListValue changed to: ");
+      console.log(currListValue);
+      var name = GetElementInsideContainer("build-dialog", "build-item-name");
+      var image = GetElementInsideContainer("build-dialog", "build-image-section");
+      var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
+      input.innerHTML = `
+      <p>Amount</p>
+      <input type="number" id="build-item-newname" value="1">
+      `;
+      name.style.display = "flex";
+      image.style.display = "flex";
+    }
+  }
+
+  async function listBuilds(builds){
+    var list = GetElementInsideContainer("build-dialog", "build-list");
+    list.innerHTML = `<option value="empty">Please select build</option>`;
+    for(let build of builds){
+      list.innerHTML += `
+        <option value="${build}">${build}</option>
+      `;
+    }
+    list.innerHTML += `
+    <option value="createBuild" onclick="createNewBuildDialog()">Create New Build</option>`;
+  }
+
+  async function createNewBuild(){
+    let buildName = document.querySelector("#build-item-newname").value;
+    let uid = auth.currentUser.uid;
+    var list = document.getElementById('build-list');
+    var name = GetElementInsideContainer("build-dialog", "build-item-name");
+    var image = GetElementInsideContainer("build-dialog", "build-image-section");
+    var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
+
+    createBuild(uid, buildName);
+    input.innerHTML = `
+    <p>Amount</p>
+    <input type="text" id="build-item-newname">
+    `;
+
+    list.value = `${buildName}`;
+    name.style.display = "flex";
+    image.style.display = "flex";
+    showBuildDialog(buildItemID, buildItemName, buildItemImage);
+  }
+
+  async function realAddToBuild(itemID){
+    var itemAmt = document.querySelector('#build-item-newname').value;
+    console.log("printing iewftem amiunt");
+    console.log(itemAmt);
+    let uid = auth.currentUser.uid;
+    addToBuild(uid, currListValue, itemID, itemAmt);
+    document.querySelector('#build-dialog').style.display = "none";
+  }
+
+  window.checkValue = checkValue;
+  window.showBuildDialog = showBuildDialog;
+  window.realAddToBuild = realAddToBuild;
+  window.createNewBuild = createNewBuild;
   window.addToFavoritesPopup = addToFavoritesPopup;
   window.showFavorites = showFavorites;
   window.addFavorite = addFavorite;

@@ -17,13 +17,8 @@ async function createBuild(uid, buildName){
 }
 
 async function addToBuild(uid, buildID, itemID, itemAmt){
-    console.log("in no cache pls addToBuild");
-    console.log(buildID);
-    console.log(itemID);
-    console.log(itemAmt);
     let found = false;
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
-    console.log("got db");
     const buildDocs = await getDocs(builddb);
     buildDocs.forEach((doc) => {
        if(doc.data().itemID === itemID){
@@ -45,6 +40,28 @@ async function addToBuild(uid, buildID, itemID, itemAmt){
     addDoc(collection(db, `/users/${uid}/builds/${buildID}/items`), obj);
 }
 
+async function getBuildItems(uid, buildID, doFunction){
+    const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
+    const buildDocs = await getDocs(builddb);
+    const buildDBItems= [];
+    buildDocs.forEach((doc) => {
+            buildDBItems.push(doc.data());
+            
+    });
+
+    const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
+    const data = await response.json();
+    let buildItems = [];
+    for(let rec of buildDBItems){
+      for(let item of data){
+        if(rec.itemID === item._id){
+            buildItems.push(item);
+        }
+      }
+    }
+    doFunction(buildItems);
+    return buildItems;
+}
 async function getBuilds(uid, doFunction){
     const builddb = collection(db, `/users/${uid}/builds`);
     const buildDocs = await getDocs(builddb);
@@ -107,4 +124,4 @@ async function favorite(uid, id, addToFavoritesPopup, name){
     addDoc(collection(db, `/users/${uid}/favorites`), obj);
   }
 
-export {getBuilds, addToBuild, createBuild, getFavorites, favorite} ;
+export {getBuildItems, getBuilds, addToBuild, createBuild, getFavorites, favorite} ;

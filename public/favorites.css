@@ -307,3 +307,60 @@ body {
   .favorite-button:active {
       color: #bc0606;
   }
+
+  .build-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    color: white;
+  }
+
+  .build-dialog-content {
+    text-align: center;
+  }
+
+  .build-dialog-dropdown {
+    margin-bottom: 10px;
+  }
+
+  .build-dialog-input {
+    margin-bottom: 10px;
+  }
+
+  #build-item-image {
+    max-height: 50%;
+    max-width: 50%
+  }
+
+  .build-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .build-dialog-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .build-dialog-buttons button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 7px;
+  }
+
+  .build-dialog-buttons button:active {
+    transform: scale(0.95);
+  }

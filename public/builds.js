@@ -5,29 +5,53 @@ function showLoginDialog() {
 
 let state = [];
 
-function drawCard(records){
-    let result = document.querySelector('');
+function drawItems(records){
+    let result = document.querySelector('#item-section');
 
     let html = '';
 
     for(let rec of records){
-        html += ``;
-    }
+        if(rec.rarity === 'Common'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Uncommon'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #00c853;" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Legendary'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Boss'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Lunar'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Void'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
+      for(let rec of records){
+        if(rec.rarity === 'Equipment'){
+          html += `<img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')"><p>${rec.itemName}</p>`;
+        }
+      }
     result.innerHTML = html;
 }
 
 async function getData() {
     const response = await fetch('https://riskofrain2api.herokuapp.com/api/everyItem');
-    const data = await response.json();
-    return data;
+    state = await response.json();
 }
-
-async function showItems() {
-    state = await getData();
-    drawCard(state);
-}
-
-showItems();
 
 function filterBy(filter){
     if(filter === 'All'){
@@ -45,7 +69,7 @@ function filterBy(filter){
 }
 
 function itemDesc(item){
-    let result = document.querySelector('');
+    let result = document.querySelector('#item-section');
 
     let html = '';
 
@@ -63,3 +87,4 @@ function itemDesc(item){
     result.innerHTML = html;
 }
 
+window.itemDesc = itemDesc;
