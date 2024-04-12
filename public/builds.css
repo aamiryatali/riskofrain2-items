@@ -1,0 +1,273 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    color: white;
+  }
+
+  .container {
+    padding: 20px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+  }
+
+  #nav-bar {
+    background-image: url('https://img.playstationtrophies.org/images//screenshots/9367/69be65d5-78ed-4202-a698-4f9018827f94_risk-of-rain-2-screen-7.jpg');
+    background-size: cover;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: calc(100% - 40px);
+  }
+
+  #nav-div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  #nav-div img {
+    width: 150px;
+    margin-right: 20px;
+  }
+
+  #nav-div img:hover {
+    transform: scale(1.1);
+  }
+
+  #nav-buttons {
+    margin-left: 20px;
+  }
+
+  #nav-buttons button {
+    padding: 10px 20px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #nav-buttons button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  #nav-buttons button:hover::after {
+    transform: scaleX(1);
+  }
+
+  #login-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .login-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
+    background-size: cover;
+    background-opacity: 50%;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .login-dialog form {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  .login-dialog input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .login-dialog button {
+    padding: 10px 20px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+  }
+
+  .search-wrapper {
+    position: relative;
+  }
+
+  .search-input {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fffdd1;
+    border: 2px solid #000000;
+    margin: 0;
+    margin-right: 10px;
+    box-sizing: border-box;
+    cursor: text;
+  }
+
+  .search-button {
+    background-color: #7F4EA1;
+    color: white;
+    border: 2px solid black;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 13.5px;
+  }
+
+  .search-button:hover {
+    background-color: #5e3a78;
+  }
+
+  .search-container:hover .search-input {
+    border-color: #6c6c6c;
+  }
+
+  .search-container:hover .search-input:focus {
+    border-color: #ccc;
+  }
+
+  .search-container:hover .search-input::placeholder {
+    color: #aaa;
+  }
+
+  .accordion {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+  }
+
+  .accordion-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .accordion-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .accordion-content a:hover {
+    background-color: #ddd;
+  }
+
+  .accordion:hover .accordion-content {
+    display: block;
+  }
+
+  .build-section, .item-section {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    overflow-y: auto;
+    background-color: #2d2d2d;
+  }
+
+  .build-section {
+    width: calc(50% - 20px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 68vh;
+  }
+
+  .create-build-button {
+    margin-top: auto;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: green;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .create-build-section {
+    position: absolute;
+    bottom: 20px;
+    left: 300px;
+  }
+
+  .item-section {
+    width: calc(50% - 20px);
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    height: 77vh;
+  }
+
+  .build-section .create-build-button {
+    margin-top: auto;
+  }
+
+  .build-section, .item-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .build-button, .item-button {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .build-section p,
+  .item-section p {
+    color: black;
+  }

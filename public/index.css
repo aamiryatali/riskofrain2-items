@@ -1,0 +1,368 @@
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      font-family: Arial, sans-serif;
+      color: #fff;
+    }
+
+    #nav-bar {
+      background-image: url('https://img.playstationtrophies.org/images//screenshots/9367/69be65d5-78ed-4202-a698-4f9018827f94_risk-of-rain-2-screen-7.jpg');
+      background-size: cover;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    #nav-div {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    #nav-div img {
+      width: 150px;
+      margin-right: 20px;
+    }
+
+    #nav-div img:hover {
+      transform: scale(1.1);
+    }
+
+    #nav-buttons {
+      margin-left: 20px;
+    }
+
+    #nav-buttons button {
+      padding: 10px 20px;
+      border: none;
+      background-color: transparent;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #nav-buttons button::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      bottom: 0;
+      left: 0;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    #nav-buttons button:hover::after {
+      transform: scaleX(1);
+    }
+
+    #login-button {
+      padding: 10px 20px;
+      border: none;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .login-dialog {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-image: url('https://www.pcgamesn.com/wp-content/sites/pcgamesn/2019/06/risk-of-rain-2-spooky-area.jpg');
+      background-size: cover;
+      background-opacity: 50%;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .login-dialog form {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .login-dialog input {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .login-dialog button {
+      padding: 10px 20px;
+      border: none;
+      background-color: black;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 300px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #fffdd1;
+      border: 2px solid #000000;
+      margin: 0;
+      margin-right: 10px;
+      box-sizing: border-box;
+      cursor: text;
+    }
+
+    .search-button {
+      background-color: #7F4EA1;
+      color: white;
+      border: 2px solid black;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 13.5px;
+    }
+
+    .search-button:hover {
+      background-color: #5e3a78;
+    }
+
+    .search-container:hover .search-input {
+      border-color: #6c6c6c;
+    }
+
+    .search-container:hover .search-input:focus {
+      border-color: #ccc;
+    }
+
+    .search-container:hover .search-input::placeholder {
+      color: #aaa;
+    }
+
+    .accordion {
+      position: relative;
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .accordion-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .accordion-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .accordion-content a:hover {
+      background-color: #ddd;
+    }
+
+    .accordion:hover .accordion-content {
+      display: block;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .container img {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #full-page-element {
+      position: fixed;
+      top: inherit;
+      margin-left: 1em;
+      margin-top: 1em;
+      margin-bottom: 0;
+      width: 20%;
+      height: 82%;
+      background-color: #2d2d2d;
+      border: 3px solid #0b89b0;
+      border-radius: 5px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px 0 20px;
+    }
+
+    #full-page-element img {
+      max-width: 50%;
+      max-height: 50%;
+    }
+
+    #full-page-element p {
+      margin-top: 10px;
+      color: white;
+    }
+
+    .x {
+      position: fixed;
+      top: 17%;
+      left: 21.5%;
+      background-color: #0b89b0;
+      color: #fffdb0;
+      border: none;
+      padding: 5px 10px;
+      font-family: 'Brush Script MT', cursive;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .x:hover {
+      background-color: #0da1ce;
+    }
+
+    .bottom-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .build-button {
+      padding: 20px 20px;
+      border: none;
+      margin: 0 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #C4A484;
+      color: white;
+      border-radius: 5px;
+      background-image: url('https://media.discordapp.net/attachments/696252800509804584/1226027170502283264/build.png?ex=662345c7&is=6610d0c7&hm=b54ca28dccbc2e3a25bd833996bc2daf84c0b926df4e6c84f3ae454491fe364d&=&format=webp&quality=lossless&width=576&height=576');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .build-button:active {
+      background-color: #86705b;
+    }
+
+    .favorite-button {
+      padding: 20px 20px;
+      border: none;
+      margin: 0 10px;
+      cursor: pointer;
+      font-size: 50px;
+      font-weight: bold;
+      background-color: transparent;
+      color: gold;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .favorite-button::before {
+      content: '\2605';
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .favorite-button:active {
+      color: #c0a407;
+    }
+
+    .build-dialog {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 1000;
+      color: white;
+    }
+
+    .build-dialog-content {
+      text-align: center;
+    }
+
+    .build-dialog-dropdown {
+      margin-bottom: 10px;
+    }
+
+    .build-dialog-input {
+      margin-bottom: 10px;
+    }
+
+    #build-item-image {
+      max-height: 50%;
+      max-width: 50%
+    }
+
+    .build-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .build-dialog-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .build-dialog-buttons button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 7px;
+    }
+
+    .build-dialog-buttons button:active {
+      transform: scale(0.95);
+    }
+    
