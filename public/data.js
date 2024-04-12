@@ -8,7 +8,7 @@ const db = getFirestore(app);
 
 async function createBuild(uid, buildName){
     console.log("inside createBuild");
-    await setDoc(doc(db, `/users/${uid}/builds/`, `${buildName}`), {
+    await setDoc(doc(db, `/users/${uid}/builds`, `${buildName}`), {
             emptyItem: {
                 amount: 0,
                 itemID: "null"
@@ -17,8 +17,9 @@ async function createBuild(uid, buildName){
 }
 
 async function addToBuild(uid, buildID, itemID, itemAmt){
-    console.log("in addToBuild");
-    const builddb = collection(db, `/users/${uid}/builds/${buildID}/items/`);
+    console.log("in no cache pls addToBuild");
+    const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
+    console.log("got db");
     const buildDocs = await getDocs(builddb);
     const buildItems = [];
     buildDocs.forEach((doc) => {
@@ -40,11 +41,11 @@ async function addToBuild(uid, buildID, itemID, itemAmt){
     }*/
     console.log("logging build items");
     console.log(buildItems);
-    addDoc(collection(db, `/users/${uid}/builds/${buildID}/items/`), obj);
+    addDoc(collection(db, `/users/${uid}/builds/${buildID}/items`), obj);
 }
 
 async function getBuilds(uid, doFunction){
-    const builddb = collection(db, `/users/${uid}/builds/`);
+    const builddb = collection(db, `/users/${uid}/builds`);
     const buildDocs = await getDocs(builddb);
     const builds = [];
     buildDocs.forEach((doc) => {
