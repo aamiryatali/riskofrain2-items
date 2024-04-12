@@ -221,20 +221,17 @@
 
     #full-page-element {
       position: fixed;
-      top: inherit;
-      margin-left: 1em;
-      margin-top: 1em;
-      margin-bottom: 0;
+      top: 0;
+      left: 0;
       width: 20%;
-      height: 82%;
-      background-color: #2d2d2d;
-      border: 3px solid #0b89b0;
-      border-radius: 5px;
+      height: 100%;
+      background-color: #333;
       z-index: 999;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 20px 0 20px;
+      justify-content: center;
+      padding: 20px;
     }
 
     #full-page-element img {
@@ -248,21 +245,19 @@
     }
 
     .x {
-      position: fixed;
-      top: 17%;
-      left: 21.5%;
-      background-color: #0b89b0;
-      color: #fffdb0;
+      top: 10px;
+      left: 10px;
+      background-color: red;
+      color: white;
       border: none;
       padding: 5px 10px;
-      font-family: 'Brush Script MT', cursive;
-      border-radius: 5px;
+      border-radius: 50%;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
     .x:hover {
-      background-color: #0da1ce;  
+      background-color: darkred;
     }
 
     .bottom-buttons {
@@ -299,7 +294,7 @@
         font-size: 50px;
         font-weight: bold;
         background-color: transparent;
-        color: gold;
+        color: red;
         border-radius: 5px;
         position: relative;
     }
@@ -313,7 +308,7 @@
     }
 
     .favorite-button:active {
-        color: #c0a407;
+        color: #bc0606;
     }
 
   </style>
