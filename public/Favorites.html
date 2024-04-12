@@ -221,17 +221,20 @@
 
     #full-page-element {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: inherit;
+      margin-left: 1em;
+      margin-top: 1em;
+      margin-bottom: 0;
       width: 20%;
-      height: 100%;
-      background-color: #333;
+      height: 82%;
+      background-color: #2d2d2d;
+      border: 3px solid #0b89b0;
+      border-radius: 5px;
       z-index: 999;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      padding: 0 20px 0 20px;
     }
 
     #full-page-element img {
@@ -245,19 +248,21 @@
     }
 
     .x {
-      top: 10px;
-      left: 10px;
-      background-color: red;
-      color: white;
+      position: fixed;
+      top: 17%;
+      left: 21.5%;
+      background-color: #0b89b0;
+      color: #fffdb0;
       border: none;
       padding: 5px 10px;
-      border-radius: 50%;
+      font-family: 'Brush Script MT', cursive;
+      border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
     .x:hover {
-      background-color: darkred;
+      background-color: #0da1ce;  
     }
 
     .bottom-buttons {
