@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getFirestore, collection, getDoc, addDoc, getDocs, deleteDoc, doc, setDoc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { getFirestore, collection, getDoc, addDoc, getDocs, deleteDoc, doc, setDoc, updateDoc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import firebaseConfig from "./firebaseConfig.js";
 
 
@@ -18,29 +18,30 @@ async function createBuild(uid, buildName){
 
 async function addToBuild(uid, buildID, itemID, itemAmt){
     console.log("in no cache pls addToBuild");
+    console.log(buildID);
+    console.log(itemID);
+    console.log(itemAmt);
+    let found = false;
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     console.log("got db");
     const buildDocs = await getDocs(builddb);
-    const buildItems = [];
     buildDocs.forEach((doc) => {
-       /* if(doc.data().itemID === itemID){
-            deleteDoc(doc.ref)
+       if(doc.data().itemID === itemID){
+            updateDoc(doc.ref, {
+                amount: itemAmt
+            });
             found = true;
-        } else {*/
-            buildItems.push(doc.data());
-        //}
+        }
     });
+
+    if(found === true){
+        return;
+    }
 
     const obj = {
         amount: itemAmt,
         itemID: itemID
     };
-
-    /*if(found === true){
-        return;
-    }*/
-    console.log("logging build items");
-    console.log(buildItems);
     addDoc(collection(db, `/users/${uid}/builds/${buildID}/items`), obj);
 }
 

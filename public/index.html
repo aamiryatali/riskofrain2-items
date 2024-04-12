@@ -531,7 +531,7 @@
 
     buttons.innerHTML = `
         <button style="background-color: #ff6f61; color: white;" onclick="cancelBuild()">Cancel</button>
-        <button style="background-color: #98ff98; color: black;" onclick="realAddToBuild('${currListValue}', '${itemID}', ${input.value})">Confirm</button>
+        <button style="background-color: #98ff98; color: black;" onclick="realAddToBuild('${itemID}')">Confirm</button>
     `;
     let uid = auth.currentUser.uid;
     getBuilds(uid, listBuilds);
@@ -565,12 +565,14 @@
     } else {
       var list = document.getElementById('build-list');
       currListValue = list.options[list.selectedIndex].value;
+      console.log("currListValue changed to: ");
+      console.log(currListValue);
       var name = GetElementInsideContainer("build-dialog", "build-item-name");
       var image = GetElementInsideContainer("build-dialog", "build-image-section");
       var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
       input.innerHTML = `
       <p>Amount</p>
-      <input type="text" id="build-item-newname">
+      <input type="number" id="build-item-newname">
       `;
       name.style.display = "flex";
       image.style.display = "flex";
@@ -609,10 +611,13 @@
     showBuildDialog(buildItemID, buildItemName, buildItemImage);
   }
 
-  async function realAddToBuild(buildID, itemID, itemAmt){
-    console.log(buildID);
+  async function realAddToBuild(itemID){
+    
+    var itemAmt = document.querySelector('#build-item-newname').value;
+    console.log("printing iewftem amiunt");
+    console.log(itemAmt);
     let uid = auth.currentUser.uid;
-    addToBuild(uid, buildID, itemID, itemAmt);
+    addToBuild(uid, currListValue, itemID, itemAmt);
   }
 
   window.checkValue = checkValue;
