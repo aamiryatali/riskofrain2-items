@@ -120,7 +120,7 @@ let state = [];
     <button onclick="closeItemDesc()" class="x">X</button>
     <br><br>
 
-    <p style="font-size: 20px">${rec.itemName}</p>
+    <p style="font-size: 20px; font-family: 'Bungee Spice', cursive;">${rec.itemName}</p>
     <img src="${rec.itemImage}" alt="${rec.itemName}">
     <br>
     <hr style="width: 100%">
@@ -132,7 +132,7 @@ let state = [];
     <p>${rec.stackType}</p>
     <div class="bottom-buttons">
         <button class="build-button" onclick="showBuildDialog('${rec._id}', '${itemName}', '${rec.itemImage}')"></button>
-        <button class="favorite-button" onclick="addFavorite('${rec._id}', '${rec.itemName}')"></button>
+        <button class="favorite-button" onclick="addFavorite('${rec._id}', '${itemName}')"></button>
     </div>
   </div>`;
           }

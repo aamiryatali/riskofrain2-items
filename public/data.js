@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-import { getFirestore, collection, getDoc, addDoc, getDocs, deleteDoc, doc, setDoc, updateDoc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc, updateDoc} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import firebaseConfig from "./firebaseConfig.js";
 
 
@@ -7,7 +7,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 async function createBuild(uid, buildName){
-    console.log("inside createBuild");
     await setDoc(doc(db, `/users/${uid}/builds`, `${buildName}`), {
             emptyItem: {
                 amount: 0,
@@ -43,10 +42,8 @@ async function addToBuild(uid, buildID, itemID, itemAmt){
 async function deleteBuildItem(uid, buildID, buildItemID){
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
-    const buildDBItems= [];
     buildDocs.forEach((doc) => {
             if(doc.data().itemID === buildItemID){
-                console.log('true');
                 deleteDoc(doc.ref);
             } 
     });
@@ -54,14 +51,21 @@ async function deleteBuildItem(uid, buildID, buildItemID){
 }
 
 async function deleteBuild(uid, buildID){
-    const builddb = collection(db, `/users/${uid}/builds`);
+    const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
     buildDocs.forEach((doc) => {
+            deleteDoc(doc.ref);
+    });
+
+    const buildlist = collection(db, `/users/${uid}/builds`);
+    const builds = await getDocs(buildlist);
+    builds.forEach((doc) => {
             if(doc.id === buildID){
                 deleteDoc(doc.ref);
             } 
     });
 }
+
 async function getBuildItems(uid, buildID, doFunction){
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
@@ -83,7 +87,6 @@ async function getBuildItems(uid, buildID, doFunction){
         }
       }
     }
-    console.log(buildItems);
     doFunction(buildItems);
     return buildItems;
 }
@@ -95,8 +98,6 @@ async function getBuilds(uid, doFunction){
             builds.push(doc.id);
             
     });
-    console.log("logging build names");
-    console.log(builds);
     doFunction(builds);
 }
 

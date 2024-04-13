@@ -49,6 +49,7 @@
       text-decoration: none;
       font-weight: bold;
       font-family: 'Bungee Spice', cursive;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 
     #nav-buttons button::after {
@@ -70,7 +71,8 @@
     #login-button {
       padding: 10px 20px;
       border: none;
-      background-color: black;
+      background-image: linear-gradient(to bottom, #d74f05, #0b89b0);
+      border: solid black 2px;
       color: white;
       font-size: 16px;
       cursor: pointer;
@@ -147,16 +149,16 @@
     }
 
     .search-button {
-      background-color: #7F4EA1;
+      background-image: linear-gradient(to bottom, #F3A400, #CB0C00);
       color: white;
       border: 2px solid black;
       padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
-      font-family: "Jacquard 24", system-ui;
+      font-family: "Aldrich", sans-serif;
       font-weight: 400;
       font-style: normal;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .search-button:hover {
@@ -188,6 +190,7 @@
       min-width: 160px;
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
       z-index: 1;
+      font-family: "Aldrich", sans-serif;
     }
 
     .accordion-content a {
@@ -244,6 +247,7 @@
       border-radius: 5px;
       border-image: linear-gradient(to bottom, #d74f05, #0b89b0) ;
       border-image-slice: 1;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 
     #full-page-element img {
@@ -337,6 +341,7 @@
       border-radius: 5px;
       z-index: 1000;
       color: white;
+      font-family: "Aldrich", sans-serif;
     }
 
     .build-dialog-content {
@@ -377,6 +382,7 @@
       font-size: 16px;
       font-weight: bold;
       border-radius: 7px;
+      font-family: "Aldrich", sans-serif;
     }
 
     .build-dialog-buttons button:active {

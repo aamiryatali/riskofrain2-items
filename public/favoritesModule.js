@@ -16,18 +16,19 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
     document.querySelector('#login-button').innerHTML = "Log in";
     document.querySelector('#login-button').onclick = showLoginDialog;
     document.querySelector('.container').innerHTML = `
-    <p>Please log in to add and view favorites</p>`;
+    <p style="text-align: center; margin: 1em; font-size: 20px; font-family: 'Aldrich'">Log in to add and view favorites!</p>`;
  }
 
   async function realSignIn(){
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
       const user = await signIn(auth, username, password);
-      //Shows error message even on successful login because
-      //await is not doing what await should do :)
-      if (user === null) {
+      
+      setTimeout(function(){
+        if (user === null) {
           document.getElementById('error-message').style.display = 'block'; // Show error message
-      }
+        }
+      }, 1500);
   }
 
   async function addFavorite(id, name){

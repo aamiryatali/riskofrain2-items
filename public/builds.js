@@ -8,9 +8,9 @@ let state = [];
 function drawItems(records){
     let result = document.querySelector('#item-section');
 
-    let html = `<div>
+    let html = `
     <button class="delete-build-button" onclick="deleteEntireBuild('${records[0].buildID}')">Delete Build</button>
-  </div>`;
+  <div id="vl"></div>`;
 
 
     for(let rec of records){
@@ -35,7 +35,7 @@ function drawItems(records){
       if(rec.rarity === 'Legendary'){
         html += `<div class="item-container">
                     <img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">
-                    <p>${rec.itemName}</p>
+                    <p>${rec.itemName} x${rec.amount}</p>
                     <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon">
                  </div>`;
       }
@@ -44,7 +44,7 @@ function drawItems(records){
       if(rec.rarity === 'Boss'){
         html += `<div class="item-container">
                     <img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">
-                    <p>${rec.itemName}</p>
+                    <p>${rec.itemName} x${rec.amount}</p>
                     <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon">
                  </div>`;
       }
@@ -53,7 +53,7 @@ function drawItems(records){
       if(rec.rarity === 'Lunar'){
         html += `<div class="item-container">
                     <img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')">
-                    <p>${rec.itemName}</p>
+                    <p>${rec.itemName} x${rec.amount}</p>
                     <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon">
                  </div>`;
       }
@@ -62,7 +62,7 @@ function drawItems(records){
       if(rec.rarity === 'Void'){
         html += `<div class="item-container">
                     <img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')">
-                    <p>${rec.itemName}</p>
+                    <p>${rec.itemName} x${rec.amount}</p>
                     <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon">
                  </div>`;
       }
@@ -99,20 +99,28 @@ function filterBy(filter){
     draw(filtered);
 }
 
-function itemDesc(item){
-    let result = document.querySelector('#item-section');
+async function itemDesc(item){
+    await getData();
 
+    let result = document.querySelector('#vl');
+    result.style.display = 'flex';
+    
     let html = '';
 
     for(let rec of state){
-        if(rec.itemImage === item){
-            html += `<div id="full-page-element">
-<img src="${rec.itemImage}" alt="${rec.itemName}">
-<p>Item Description:</p>
-<p>${rec.description}</p>
-<p>Stack Type:</p>
-<p>${rec.stackType}</p>
-</div>`;
+        if(rec._id === item){
+            html += `<div id="item-description">
+            <p style="font-size: 20px; font-family: 'Bungee Spice', cursive;">${rec.itemName}</p>
+    <img src="${rec.itemImage}" alt="${rec.itemName}">
+    <br>
+    <hr style="width: 100%">
+    <br>
+    <p>Item Description:</p>
+    <p>${rec.description}</p>
+
+    <p>Stack Type:</p>
+    <p>${rec.stackType}</p>
+<\div>`;
         }
     }
     result.innerHTML = html;

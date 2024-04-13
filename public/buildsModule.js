@@ -10,26 +10,27 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
     document.querySelector('#login-button').innerHTML = "Log out";
     document.querySelector('#login-button').onclick = logout;
     document.getElementById('login-dialog').style.display = 'none';
+    document.querySelector('#build-page-content').style.display = "flex";
+    document.querySelector('#logged-out-text').style.display = "none";
     showBuilds();
   }
   function setLoggedOutUI(){
     document.querySelector('#login-button').innerHTML = "Log in";
     document.querySelector('#login-button').onclick = showLoginDialog;
-    document.querySelector('#build-page-content').innerHTML = `
-    <div>
-    <p>Please log in or create an account to create and view builds</p>
-    </div>`;
+    document.querySelector('#build-page-content').style.display = "none";
+    document.querySelector('#logged-out-text').style.display = "block";
  }
 
   async function realSignIn(){
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
       const user = await signIn(auth, username, password);
-      //Shows error message even on successful login because
-      //await is not doing what await should do :)
-      if (user === null) {
+
+      setTimeout(function(){
+        if (user === null) {
           document.getElementById('error-message').style.display = 'block'; // Show error message
-      }
+        }
+      }, 1500);
   }
 
   function addFavorite(id, name){
@@ -98,7 +99,6 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
   }
 
   async function createNewBuildDialog(){
-    console.log("inside createnewbuilddialog");
     var dialog = document.getElementById('build-dialog');
     dialog.style.display = "block";
   }
@@ -114,31 +114,32 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
 
   async function realAddToBuild(itemID){
     var itemAmt = document.querySelector('#build-item-newname').value;
-    console.log("printing iewftem amiunt");
-    console.log(itemAmt);
     let uid = auth.currentUser.uid;
     addToBuild(uid, currListValue, itemID, itemAmt);
     document.querySelector('#build-dialog').style.display = "none";
   }
 
   async function drawBuilds(builds){
-    console.log(builds);
     var buildSection = document.querySelector('#build-section');
     buildSection.innerHTML = `<p style="text-align: left; margin-left: 20px;">Your builds:</p>`
     for(let build of builds){
         buildSection.innerHTML += `
         <button class="build-button" onclick="showBuildItems('${build}')">${build}</button>`
     }
+  
   }
 
   async function drawBuildItems(buildItems){
-    let itemSection = document.querySelector('#item-section');
-    itemSection.innerHTML = `
-    <p style="text-align: left; margin-left: 20px;">Items:</p>`;
     drawItems(buildItems);
   }
 
   async function showBuildItems(buildID){
+    let itemSection = document.querySelector('#item-section');
+    itemSection.innerHTML = `
+    <p style="text-align: left; margin-left: 20px;">Visit the Items page to add items to this build!</p>
+    <div>
+    <button class="delete-build-button" onclick="deleteEntireBuild('${buildID}')">Delete Build</button>
+    </div>`;
     getBuildItems(auth.currentUser.uid, buildID, drawBuildItems);
   }
 
@@ -146,15 +147,16 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
     let user = auth.currentUser;
     if(user === null){
       alert("Please log in to add and view favorites!");
-      console.log("returning null");
       return;
     }
     await getBuilds(auth.currentUser.uid, drawBuilds);
   }
 
   async function deleteEntireBuild(buildID){
-    deleteBuild(auth.currentUser.uid, buildID);
+    await deleteBuild(auth.currentUser.uid, buildID);
     showBuilds();
+    let result = document.querySelector('#item-section');
+    result.innerHTML = '';
   }
 
   async function deleteItem(buildID, buildItemID){

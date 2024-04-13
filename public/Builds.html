@@ -20,20 +20,7 @@
   </div>
 
   <div id="nav-buttons">
-    <div class="accordion">
-      <button onclick="window.location.href='index.html'">Items</button>
-      <div class="accordion-content">
-        <a href="#" onclick="filterBy('All')">All</a>
-        <a href="#" onclick="filterBy('Common')">Common</a>
-        <a href="#" onclick="filterBy('Uncommon')">Uncommon</a>
-        <a href="#" onclick="filterBy('Legendary')">Legendary</a>
-        <a href="#" onclick="filterBy('Boss')">Boss</a>
-        <a href="#" onclick="filterBy('Lunar')">Lunar</a>
-        <a href="#" onclick="filterBy('Void')">Void</a>
-        <a href="#" onclick="filterBy('Equipment')">Equipment</a>
-      </div>
-    </div>
-
+    <button onclick="window.location.href='index.html'">Items</button>
     <button onclick="window.location.href='Builds.html'">Builds</button>
     <button onclick="window.location.href='Favorites.html'">Favorites</button>
   </div>
@@ -45,16 +32,18 @@
 
   <div><button id="login-button" onclick="showLoginDialog()">Log in</button></div>
 </nav>
-
+<div id="logged-out-text" style="display: none">
+  <p style="text-align: center; margin: 1em; margin-top: 2em; font-size: 20px; font-family: 'Aldrich'">Log in to create and view builds!</p>
+</div>
 <div class="container" id="build-page-content">
   <div class="build-section" id="build-section">
   </div>
 
-  <div class="create-build-section">
+  <div class="create-build-section" id="create-build-section">
     <button class="create-build-button" onclick="createNewBuildDialog()">Create Build</button>
   </div>
   <div class="item-section" id="item-section">
-  <div class="vl"></div>
+    
   </div>
 </div>
 

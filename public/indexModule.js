@@ -1,4 +1,4 @@
-import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
+import {auth, setAuthListeners, signIn, logout} from './auth.js';
   import {getBuilds, addToBuild, getFavorites, favorite, createBuild} from './data.js';
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
@@ -20,21 +20,25 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
       let username = document.querySelector('#user').value;
       let password = document.querySelector('#pass').value;
       const user = await signIn(auth, username, password);
-      //Shows error message even on successful login because
-      //await is not doing what await should do :)
-      if (user === null) {
+      
+      
+      setTimeout(function(){
+        if (user === null) {
           document.getElementById('error-message').style.display = 'block'; // Show error message
-      }
+        }
+      }, 1500);
+      
   }
 
   function addFavorite(id, name){
+    let itemName = decodeURIComponent(name);
     let user = auth.currentUser;
     if(user === null){
       alert("Please log in to add and view favorites!");
       return;
     }
     let uid = auth.currentUser.uid;
-    favorite(uid, id, addToFavoritesPopup, name);
+    favorite(uid, id, addToFavoritesPopup, itemName);
   }
 
   function addToFavoritesPopup(itemName, isAlreadyAdded) {
@@ -163,9 +167,7 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
   }
 
   async function realAddToBuild(itemID){
-    var itemAmt = document.querySelector('#build-item-newname').value;
-    console.log("printing iewftem amiunt");
-    console.log(itemAmt);
+    var itemAmt = document.querySelector('#build-item-newname').value; 
     let uid = auth.currentUser.uid;
     addToBuild(uid, currListValue, itemID, itemAmt);
     document.querySelector('#build-dialog').style.display = "none";
