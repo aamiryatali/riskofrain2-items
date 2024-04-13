@@ -1,5 +1,5 @@
 import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
-  import {getBuildItems, getBuilds, addToBuild, getFavorites, favorite, createBuild} from './data.js';
+  import {deleteBuild, deleteBuildItem, getBuildItems, getBuilds, addToBuild, getFavorites, favorite, createBuild} from './data.js';
   setAuthListeners(setLoggedInUI, setLoggedOutUI);
 
   var buildItemID;
@@ -98,73 +98,18 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
   }
 
   async function createNewBuildDialog(){
-    var name = GetElementInsideContainer("build-dialog", "build-item-name");
-    var image = GetElementInsideContainer("build-dialog", "build-image-section");
-    var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
-    var buttons = GetElementInsideContainer("build-dialog", "build-dialog-buttons");
-    name.style.display = "none";
-    image.style.display = "none";
-    input.innerHTML = `
-      <p>Enter new build name</p>
-      <input type="text" id="build-item-newname">
-    `;
-    
-    buttons.innerHTML = `
-        <button style="background-color: #ff6f61; color: white;" onclick="showBuildDialog()">Cancel</button>
-        <button style="background-color: #98ff98; color: black;" onclick="createNewBuild()">Confirm</button>
-    `;
-  }
-
-  async function checkValue(event){
-    if(event.target.value === "createBuild"){
-      createNewBuildDialog();
-    } else {
-      var list = document.getElementById('build-list');
-      currListValue = list.options[list.selectedIndex].value;
-      console.log("currListValue changed to: ");
-      console.log(currListValue);
-      var name = GetElementInsideContainer("build-dialog", "build-item-name");
-      var image = GetElementInsideContainer("build-dialog", "build-image-section");
-      var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
-      input.innerHTML = `
-      <p>Amount</p>
-      <input type="number" id="build-item-newname" value="1">
-      `;
-      name.style.display = "flex";
-      image.style.display = "flex";
-    }
-  }
-
-  async function listBuilds(builds){
-    var list = GetElementInsideContainer("build-dialog", "build-list");
-    list.innerHTML = `<option value="empty">Please select build</option>`;
-    for(let build of builds){
-      list.innerHTML += `
-        <option value="${build}">${build}</option>
-      `;
-    }
-    list.innerHTML += `
-    <option value="createBuild" onclick="createNewBuildDialog()">Create New Build</option>`;
+    console.log("inside createnewbuilddialog");
+    var dialog = document.getElementById('build-dialog');
+    dialog.style.display = "block";
   }
 
   async function createNewBuild(){
-    let buildName = document.querySelector("#build-item-newname").value;
+    let buildName = document.querySelector("#new-build-name").value;
     let uid = auth.currentUser.uid;
-    var list = document.getElementById('build-list');
-    var name = GetElementInsideContainer("build-dialog", "build-item-name");
-    var image = GetElementInsideContainer("build-dialog", "build-image-section");
-    var input = GetElementInsideContainer("build-dialog", "build-dialog-input");
-
+    var dialog = document.getElementById('build-dialog');
     createBuild(uid, buildName);
-    input.innerHTML = `
-    <p>Amount</p>
-    <input type="text" id="build-item-newname">
-    `;
-
-    list.value = `${buildName}`;
-    name.style.display = "flex";
-    image.style.display = "flex";
-    showBuildDialog(buildItemID, buildItemName, buildItemImage);
+    dialog.style.display = "none";
+    showBuilds();
   }
 
   async function realAddToBuild(itemID){
@@ -204,11 +149,23 @@ import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
       console.log("returning null");
       return;
     }
-    getBuilds(auth.currentUser.uid, drawBuilds);
+    await getBuilds(auth.currentUser.uid, drawBuilds);
   }
 
+  async function deleteEntireBuild(buildID){
+    deleteBuild(auth.currentUser.uid, buildID);
+    showBuilds();
+  }
+
+  async function deleteItem(buildID, buildItemID){
+    await deleteBuildItem(auth.currentUser.uid, buildID, buildItemID);
+    showBuildItems(buildID);
+  }
+
+  window.deleteEntireBuild = deleteEntireBuild;
+  window.deleteItem = deleteItem;
+  window.createNewBuildDialog = createNewBuildDialog;
   window.showBuildItems = showBuildItems;
-  window.checkValue = checkValue;
   window.showBuildDialog = showBuildDialog;
   window.realAddToBuild = realAddToBuild;
   window.createNewBuild = createNewBuild;

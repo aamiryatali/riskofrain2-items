@@ -43,23 +43,24 @@
       border: none;
       background-color: transparent;
       color: white;
-      font-size: 16px;
+      font-size: 20px;
       cursor: pointer;
       position: relative;
       text-decoration: none;
       font-weight: bold;
+      font-family: 'Bungee Spice', cursive;
     }
 
     #nav-buttons button::after {
       content: '';
       position: absolute;
       width: 100%;
-      height: 2px;
-      background-color: white;
+      height: 2.5px;
+      background-color: #d74f05;
       bottom: 0;
       left: 0;
       transform: scaleX(0);
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease;
     }
 
     #nav-buttons button:hover::after {
@@ -74,6 +75,9 @@
       font-size: 16px;
       cursor: pointer;
       border-radius: 5px;
+      font-family: "Aldrich", sans-serif;
+      font-weight: 400;
+      font-style: normal;
     }
 
     .login-dialog {
@@ -95,6 +99,7 @@
       background-color: rgba(255, 255, 255, 0.8);
       padding: 20px;
       border-radius: 5px;
+      font-family: "Aldrich", sans-serif;
     }
 
     .login-dialog input {
@@ -102,6 +107,7 @@
       width: 100%;
       padding: 10px;
       box-sizing: border-box;
+      font-family: "Aldrich", sans-serif;
     }
 
     .login-dialog button {
@@ -113,6 +119,7 @@
       cursor: pointer;
       border-radius: 5px;
       margin-top: 10px;
+      font-family: "Aldrich", sans-serif;
     }
 
     .search-container {
@@ -136,6 +143,7 @@
       margin-right: 10px;
       box-sizing: border-box;
       cursor: text;
+      font-family: "Aldrich", sans-serif;
     }
 
     .search-button {
@@ -145,8 +153,10 @@
       padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
-      font-family: Arial, sans-serif;
-      font-size: 13.5px;
+      font-family: "Jacquard 24", system-ui;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 16px;
     }
 
     .search-button:hover {
@@ -221,13 +231,19 @@
       width: 20%;
       height: 82%;
       background-color: #2d2d2d;
-      border: 3px solid #0b89b0;
-      border-radius: 5px;
       z-index: 999;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 0 20px 0 20px;
+      line-height: 1.5;
+      word-spacing: 2px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      border: 3px solid;
+      border-radius: 5px;
+      border-image: linear-gradient(to bottom, #d74f05, #0b89b0) ;
+      border-image-slice: 1;
     }
 
     #full-page-element img {
@@ -238,24 +254,25 @@
     #full-page-element p {
       margin-top: 10px;
       color: white;
+      font-family: "Aldrich", sans-serif;
     }
 
     .x {
-      position: fixed;
-      top: 17%;
-      left: 21.5%;
-      background-color: #0b89b0;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: red;
       color: #fffdb0;
       border: none;
       padding: 5px 10px;
-      font-family: 'Brush Script MT', cursive;
+      font-family: "Press Start 2P", system-ui;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
     }
 
     .x:hover {
-      background-color: #0da1ce;
+      background-color: darkred;
     }
 
     .bottom-buttons {

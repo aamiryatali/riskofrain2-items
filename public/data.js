@@ -40,6 +40,28 @@ async function addToBuild(uid, buildID, itemID, itemAmt){
     addDoc(collection(db, `/users/${uid}/builds/${buildID}/items`), obj);
 }
 
+async function deleteBuildItem(uid, buildID, buildItemID){
+    const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
+    const buildDocs = await getDocs(builddb);
+    const buildDBItems= [];
+    buildDocs.forEach((doc) => {
+            if(doc.data().itemID === buildItemID){
+                console.log('true');
+                deleteDoc(doc.ref);
+            } 
+    });
+
+}
+
+async function deleteBuild(uid, buildID){
+    const builddb = collection(db, `/users/${uid}/builds`);
+    const buildDocs = await getDocs(builddb);
+    buildDocs.forEach((doc) => {
+            if(doc.id === buildID){
+                deleteDoc(doc.ref);
+            } 
+    });
+}
 async function getBuildItems(uid, buildID, doFunction){
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
@@ -55,10 +77,13 @@ async function getBuildItems(uid, buildID, doFunction){
     for(let rec of buildDBItems){
       for(let item of data){
         if(rec.itemID === item._id){
+            item["amount"] = rec.amount;
+            item["buildID"] = buildID;
             buildItems.push(item);
         }
       }
     }
+    console.log(buildItems);
     doFunction(buildItems);
     return buildItems;
 }
@@ -124,4 +149,4 @@ async function favorite(uid, id, addToFavoritesPopup, name){
     addDoc(collection(db, `/users/${uid}/favorites`), obj);
   }
 
-export {getBuildItems, getBuilds, addToBuild, createBuild, getFavorites, favorite} ;
+export {deleteBuild, deleteBuildItem, getBuildItems, getBuilds, addToBuild, createBuild, getFavorites, favorite} ;

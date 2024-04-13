@@ -6,6 +6,11 @@
   <title>Risk of Rain 2 Item Browser</title>
   <link rel="icon" type="image/gif" href="https://media.tenor.com/t-OOyUiHERkAAAAi/riskofrain2-risk-of-rain.gif">
   <link rel="stylesheet" href="builds.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Bungee+Spice&family=Jacquard+24&family=Jersey+15&family=Press+Start+2P&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -46,24 +51,37 @@
   </div>
 
   <div class="create-build-section">
-    <button class="create-build-button">Create Build</button>
+    <button class="create-build-button" onclick="createNewBuildDialog()">Create Build</button>
   </div>
-
   <div class="item-section" id="item-section">
-  
+  <div class="vl"></div>
   </div>
 </div>
-
-
 
 <div class="login-dialog" id="login-dialog">
   <form>
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
-    <button type="submit">Log in</button>
-    <p>Don't have an account? <a href="SignUp.html">Sign Up</a></p>
+    <input type="text" id="user" placeholder="Email">
+    <input type="password" id="pass" placeholder="Password">
+    <button type="button" onclick="realSignIn()">Log in</button>
+    <p id="error-message" style="color: red; display: none;">Wrong account email or password</p>
+    <p style="color: black">Don't have an account? <a href="SignUp.html">Sign Up</a></p>
   </form>
 </div>
+
+<div class="build-dialog" id="build-dialog">
+  <div class="build-dialog-content">
+    <h2>Create New Build</h2>
+    <div class="build-dialog-input" id="build-dialog-input">
+      <p>Enter build name</p>
+      <input type="text" id="new-build-name">
+    </div>
+    <div class="build-dialog-buttons" id="build-dialog-buttons">
+      <button style="background-color: #ff6f61; color: white;" onclick="document.getElementById('build-dialog').style.display ='none'">Cancel</button>
+      <button style="background-color: #98ff98; color: black;" onclick="createNewBuild()">Confirm</button>
+    </div>
+  </div>
+</div>
+</body>
 
 <script type="module" src="buildsModule.js"></script>
 <script src="builds.js"></script>
