@@ -208,7 +208,7 @@ async function realAddToBuild(itemID){
   document.querySelector('#build-dialog').style.display = "none";
 }
 
-
+window.search = search;
 window.checkValue = checkValue;
 window.showBuildDialog = showBuildDialog;
 window.realAddToBuild = realAddToBuild;
