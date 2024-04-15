@@ -4,9 +4,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut, 
-  signInAnonymously, 
-  setPersistence, 
-  browserLocalPersistence, 
   onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import firebaseConfig from "./firebaseConfig.js";
@@ -21,10 +18,7 @@ function setAuthListeners(setLoggedInUI, setLoggedOutUI){
     if (user) {
       setLoggedInUI();
       const uid = user.id;
-      console.log("ES IT HAPPENED signed in");
-      console.log(uid);
     } else {
-      console.log("YOU JUST TRIGGERED not signed in");
       setLoggedOutUI();
     }
   });
@@ -46,7 +40,7 @@ async function createUser(auth, email, password){
 }
 
 async function signIn(auth, email, password){
-    signInWithEmailAndPassword(auth, email, password)
+  signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
@@ -60,17 +54,9 @@ async function signIn(auth, email, password){
 }
 
 async function logout() {
- /* try {
-    await signOut(auth);
-  } catch (error) {
-    console.error('Error signing out', error);
-  }
-*/
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        }).catch((error) => {
-        // An error happened.
-    });
+  signOut(auth).then(() => {
+    }).catch((error) => {
+  });
 }
 
 export {auth, createUser, setAuthListeners, signIn, logout, signInWithEmailAndPassword};

@@ -162,7 +162,7 @@
     }
 
     .search-button:hover {
-      background-color: #5e3a78;
+      background-image: linear-gradient(to bottom, #dc9303, #be0e02);
     }
 
     .search-container:hover .search-input {
@@ -388,4 +388,3 @@
     .build-dialog-buttons button:active {
       transform: scale(0.95);
     }
-    

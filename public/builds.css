@@ -19,7 +19,7 @@ body {
     background-size: cover;
     padding: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     position: sticky;
     top: 0;
@@ -78,8 +78,12 @@ body {
 
   #login-button {
     padding: 10px 20px;
+    position: fixed;
     border: none;
-    background-color: black;
+    right: 20px;
+    top: 27px;
+    background-image: linear-gradient(to bottom, #d74f05, #0b89b0);
+    border: solid black 2px;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -129,59 +133,6 @@ body {
     border-radius: 5px;
     margin-top: 10px;
     font-family: "Aldrich", sans-serif;
-  }
-
-  .search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-  }
-
-  .search-wrapper {
-    position: relative;
-  }
-
-  .search-input {
-    width: 300px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #fffdd1;
-    border: 2px solid #000000;
-    margin: 0;
-    margin-right: 10px;
-    box-sizing: border-box;
-    cursor: text;
-    font-family: "Aldrich", sans-serif;
-  }
-
-  .search-button {
-    background-color: #7F4EA1;
-    color: white;
-    border: 2px solid black;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: "Jacquard 24", system-ui;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
-  }
-
-  .search-button:hover {
-    background-color: #5e3a78;
-  }
-
-  .search-container:hover .search-input {
-    border-color: #6c6c6c;
-  }
-
-  .search-container:hover .search-input:focus {
-    border-color: #ccc;
-  }
-
-  .search-container:hover .search-input::placeholder {
-    color: #aaa;
   }
 
   .build-dialog {

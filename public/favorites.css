@@ -4,7 +4,6 @@ body {
     background-color: #1a1a1a;
     font-family: Arial, sans-serif;
     color: #fff;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
   #nav-bar {
@@ -71,7 +70,8 @@ body {
   #login-button {
     padding: 10px 20px;
     border: none;
-    background-color: black;
+    background-image: linear-gradient(to bottom, #d74f05, #0b89b0);
+    border: solid black 2px;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -101,6 +101,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     font-family: "Aldrich", sans-serif;
+    color: black;
   }
 
   .login-dialog input {
@@ -148,20 +149,20 @@ body {
   }
 
   .search-button {
-    background-color: #7F4EA1;
+    background-image: linear-gradient(to bottom, #F3A400, #CB0C00);
     color: white;
     border: 2px solid black;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-family: "Jacquard 24", system-ui;
+    font-family: "Aldrich", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .search-button:hover {
-    background-color: #5e3a78;
+    background-image: linear-gradient(to bottom, #dc9303, #be0e02);
   }
 
   .search-container:hover .search-input {
@@ -215,6 +216,7 @@ body {
     border-radius: 5px;
     border-image: linear-gradient(to bottom, #d74f05, #0b89b0) ;
     border-image-slice: 1;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   }
 
 

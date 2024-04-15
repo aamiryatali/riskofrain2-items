@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Bungee+Spice&family=Jacquard+24&family=Jersey+15&family=Press+Start+2P&display=swap" rel="stylesheet">
+
     <title>Sign Up</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://clan.akamai.steamstatic.com/images//33906904/21f548995404ba7a163fe77db01fd722efbafa57.png');
+            background-image: url('https://wallpapercave.com/wp/wp13098813.jpg');
+            background-size: cover;
             margin: 0;
             padding: 0;
             display: flex;
@@ -15,17 +21,18 @@
             align-items: center;
             height: 100vh;
             font-family: "Aldrich", sans-serif;
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            opacity: 1;
         }
         form {
             background-size: cover;
-            background-color: darkgrey;
+            background-color: #C0C0C0;
             background-repeat: no-repeat;
             background-position: center;
             padding: 50px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             font-family: "Aldrich", sans-serif;
+            opacity: 0.86;
         }
         input[type="text"],
         input[type="password"] {
@@ -36,6 +43,7 @@
             border-radius: 5px;
             box-sizing: border-box;
             font-family: "Aldrich", sans-serif;
+            opacity: 1;
         }
         input[type="button"] {
             background-color: #007bff;
@@ -45,9 +53,10 @@
             border-radius: 5px;
             cursor: pointer;
             font-family: "Aldrich", sans-serif;
+            opacity: 1;
         }
         input[type="button"]:hover {
-            background-color: #0056b3;
+            background: linear-gradient(to right, #007bff, #0056b3);
         }
         form p{
           font-size: 13px;
@@ -55,6 +64,21 @@
           margin: 0;
           margin-bottom: 10px;
           font-family: "Aldrich", sans-serif;
+          opacity: 1;
+        }
+        .return-button {
+            position: absolute;
+            bottom: 140px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: "Aldrich", sans-serif;
+            opacity: 1;
+        }
+        .return-button:hover {
+            background: linear-gradient(to right, #007bff, #0056b3);
         }
     </style>
 </head>
@@ -70,7 +94,7 @@
       <div class="input-field col s12">
         <label for="password">Password</label>
         <input name="password" type="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Enter password">
-        <p>Minimum length 8, at least 1 symbol, capital letter, common letter and number</p>
+        <p>Minimum length 8, at least 1 symbol, capital letter, common letter and number.</p>
       </div>
     </div>
 
@@ -79,7 +103,10 @@
         <input type="button" value="Sign Up" onclick="return validateForm()" />
       </div>
     </div>
+    
   </form>
+
+  <a href="index.html" class="return-button">Return to Homepage</a>
 
   <script type="module">
     import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
