@@ -184,7 +184,7 @@ function closeItemDesc() {
 }
 
 
-//Hides the login dialog if you click off it
+//Hides the login dialog if you click off it.
 document.body.addEventListener('click', function(event) {
     var dialog = document.getElementById('login-dialog');
     if (!dialog.contains(event.target) && event.target !== document.getElementById('login-button')) {
