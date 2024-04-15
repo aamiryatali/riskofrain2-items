@@ -149,23 +149,10 @@ function drawCard(records){
 
   //This particular line adds a very special cat to the gallery
   let searchKey = document.querySelector('#search-key').value;
-  if(searchKey === '' && filtered.length === 0){
+  if(searchKey === ''){
     html += `<img onclick="itemDesc('vro')" src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid saddlebrown;">`
   }
   result.innerHTML = html;
-}
-
-//Function to filter by item rarity
-function filterBy(filter){
-  if(filter === 'All'){
-    return drawCard(state);
-  }
-  let filtered = [];
-  for (let rec of state) {
-    if (rec.rarity === filter)
-      filtered.push(rec);
-  }
-  drawCard(filtered);
 }
 
 window.drawCard = drawCard;
