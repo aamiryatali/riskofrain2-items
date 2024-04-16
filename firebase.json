@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "riskofrain2-items",
     "public": "public",
     "ignore": [
       "firebase.json",

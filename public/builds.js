@@ -119,7 +119,7 @@ async function itemDesc(item){
 
   <p>Stack Type:</p>
   <p>${rec.stackType}</p>
-<\v>`;
+<\div>`;
       }
   }
   result.innerHTML = html;
