@@ -116,7 +116,7 @@ async function createNewBuild(){
 async function realAddToBuild(itemID){
   var itemAmt = document.querySelector('#build-item-newname').value;
   let uid = auth.currentUser.uid;
-  addToBuild(uid, currListValue, itemID, itemAmt);
+  addToBuild(uid, currListValue, itemID, itemAmt, buildItemName);
   document.querySelector('#build-dialog').style.display = "none";
 }
 
@@ -148,6 +148,7 @@ async function showBuildItems(buildID){
 
 //Shows the list of stored builds
 async function showBuilds(){
+  console.log("showing builds")
   let user = auth.currentUser;
   if(user === null){
     alert("Please log in to add and view favorites!");

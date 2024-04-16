@@ -100,10 +100,14 @@ function search(favArr) {
   }
 }
 
+function clickSearch(){
+  getFavorites(auth.currentUser.uid, search);
+}
+
 //Search function for favorites page
 document.querySelector("#search-key").onkeyup=function(){
     if(event.keyCode==13){
-      let thing = getFavorites(auth.currentUser.uid, search);
+      getFavorites(auth.currentUser.uid, search);
     }
 };
 
@@ -208,6 +212,7 @@ async function realAddToBuild(itemID){
   document.querySelector('#build-dialog').style.display = "none";
 }
 
+window.clickSearch = clickSearch;
 window.search = search;
 window.checkValue = checkValue;
 window.showBuildDialog = showBuildDialog;

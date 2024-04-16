@@ -15,7 +15,7 @@ async function createBuild(uid, buildName){
 }
 
 //Adds an item to a build or updates an already added item
-async function addToBuild(uid, buildID, itemID, itemAmt){
+async function addToBuild(uid, buildID, itemID, itemAmt, buildItemName, addToBuildPopup){
     let found = false;
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
@@ -25,6 +25,7 @@ async function addToBuild(uid, buildID, itemID, itemAmt){
                 amount: itemAmt
             });
             found = true;
+            addToBuildPopup(buildID, buildItemName, "true");
         }
     });
 
@@ -32,6 +33,7 @@ async function addToBuild(uid, buildID, itemID, itemAmt){
         return;
     }
 
+    addToBuildPopup(buildID, buildItemName, "false");
     const obj = { //Otherwise add new item to build
         amount: itemAmt,
         itemID: itemID

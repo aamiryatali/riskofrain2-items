@@ -66,6 +66,29 @@ function addToFavoritesPopup(itemName, isAlreadyAdded) {
   }, 3000);
 }
 
+function addToBuildPopup(buildID, itemName, isAlreadyAdded) {
+  var popup = document.createElement('div');
+  popup.style.position = 'fixed';
+  popup.style.bottom = '20px';
+  popup.style.left = '25%';
+  popup.style.padding = '10px';
+  popup.style.color = 'white';
+  popup.style.borderRadius = '5px';
+
+  if(isAlreadyAdded === "true"){
+    popup.style.backgroundColor = 'orange';
+    popup.innerHTML = itemName + ' has been updated in ' + buildID;
+  } else {
+    popup.style.backgroundColor = 'green';
+    popup.innerHTML = itemName + ' has been added to ' + buildID;
+  }
+
+  document.body.appendChild(popup);
+  setTimeout(function() {
+    document.body.removeChild(popup);
+  }, 3000);
+}
+
 //Function to draw favorited items on the page
 async function showFavorites() {
   let user = auth.currentUser;
@@ -170,7 +193,7 @@ async function createNewBuild(){
 async function realAddToBuild(itemID){
   var itemAmt = document.querySelector('#build-item-newname').value; 
   let uid = auth.currentUser.uid;
-  addToBuild(uid, currListValue, itemID, itemAmt);
+  addToBuild(uid, currListValue, itemID, itemAmt, buildItemName, addToBuildPopup);
   document.querySelector('#build-dialog').style.display = "none";
 }
 

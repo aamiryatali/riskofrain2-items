@@ -20,7 +20,7 @@ function GetElementInsideContainer(containerID, childID) {
 }
 
 //Draws the data on the screen and adds colored borders respective to their
-//rarity.
+//rarity. Done so inefficiently in order to sort the colours properly.
 function drawCard(records){
     let result = document.querySelector('.container');
     let html = '';
@@ -196,3 +196,9 @@ document.body.addEventListener('click', function(event) {
         document.getElementById('error-message').style.display = 'none';
     }
 });
+
+document.querySelector("#search-key").onkeyup=function(){
+  if(event.keyCode==13){
+    search();
+  }
+};
