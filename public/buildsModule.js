@@ -120,13 +120,20 @@ async function realAddToBuild(itemID){
   document.querySelector('#build-dialog').style.display = "none";
 }
 
+function fixedEncodeURIComponent(src) {
+  return encodeURIComponent(src).replace(/[']/g, function (c) {
+      return '%' + c.charCodeAt(0).toString(16);
+  });
+}
+
 //Draws the list of stored builds on the page
 async function drawBuilds(builds){
   var buildSection = document.querySelector('#build-section');
   buildSection.innerHTML = `<p style="text-align: left; margin-left: 20px;">Your builds:</p>`
   for(let build of builds){
+      let encodedBuild = fixedEncodeURIComponent(`${build}`);
       buildSection.innerHTML += `
-      <button class="build-button" onclick="showBuildItems('${build}')">${build}</button>`
+      <button class="build-button" onclick="showBuildItems('${encodedBuild}')">${build}</button>`
   }
 }
 
@@ -136,19 +143,19 @@ async function drawBuildItems(buildItems){
 }
 
 //Actually displays the items in a build
-async function showBuildItems(buildID){
+async function showBuildItems(ebuildID){
+  let buildID = decodeURIComponent(ebuildID);
   let itemSection = document.querySelector('#item-section');
   itemSection.innerHTML = `
   <p style="text-align: left; margin-left: 20px;">Visit the Items page to add items to this build!</p>
   <div>
-  <button class="delete-build-button" onclick="deleteEntireBuild('${buildID}')">Delete Build</button>
+  <button class="delete-build-button" onclick="deleteEntireBuild('${ebuildID}')">Delete Build</button>
   </div>`;
   getBuildItems(auth.currentUser.uid, buildID, drawBuildItems);
 }
 
 //Shows the list of stored builds
 async function showBuilds(){
-  console.log("showing builds")
   let user = auth.currentUser;
   if(user === null){
     alert("Please log in to add and view favorites!");
@@ -160,7 +167,9 @@ async function showBuilds(){
 //Deletes an entire build
 async function deleteEntireBuild(buildID){
   await deleteBuild(auth.currentUser.uid, buildID);
-  showBuilds();
+  setTimeout(function(){
+    showBuilds();
+  }, 50);
   let result = document.querySelector('#item-section');
   result.innerHTML = '';
 }
@@ -168,7 +177,10 @@ async function deleteEntireBuild(buildID){
 //Deletes a specific item from a build
 async function deleteItem(buildID, buildItemID){
   await deleteBuildItem(auth.currentUser.uid, buildID, buildItemID);
-  showBuildItems(buildID);
+  setTimeout(function(){
+    showBuildItems(buildID);
+  }, 50);
+  
 }
 
 

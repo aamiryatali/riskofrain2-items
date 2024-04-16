@@ -101,6 +101,10 @@ async function showFavorites() {
 
 //Shows the build dialog
 async function showBuildDialog(itemID, itemName, itemImage){
+  if(auth.currentUser === null){
+    alert("Please log in to add to builds!");
+    return;
+  }
   buildItemID = itemID;
   buildItemName = decodeURIComponent(itemName);
   buildItemImage = itemImage;

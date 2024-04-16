@@ -5,79 +5,90 @@ function showLoginDialog() {
   dialog.style.display = 'block';
 }
 
+function fixedEncodeURIComponent(src) {
+  return encodeURIComponent(src).replace(/[']/g, function (c) {
+      return '%' + c.charCodeAt(0).toString(16);
+  });
+}
+
 //Draws the items on the screen and adds colored borders respective to their
 //rarity.
 function drawItems(records){
-  console.log('in drrawItems');
-  console.log(records);
   let result = document.querySelector('#item-section');
+  let buildID = fixedEncodeURIComponent(records[0].buildID);
   let html = `
-  <button class="delete-build-button" onclick="deleteEntireBuild('${records[0].buildID}')">Delete Build</button>
+  <button class="delete-build-button" onclick="deleteEntireBuild('${buildID}')">Delete Build</button>
   <div id="vl"></div>`;
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Common'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName} x${rec.amount}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Uncommon'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid #00c853;" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName} x${rec.amount}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Legendary'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName} x${rec.amount}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Boss'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName} x${rec.amount}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Lunar'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid #80d8ff;" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName} x${rec.amount}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Void'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid #d500f9;" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName} x${rec.amount}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
   for(let rec of records){
+    let buildID = fixedEncodeURIComponent(rec.buildID);
     if(rec.rarity === 'Equipment'){
       html += `<div class="item-container">
                   <img src="${rec.itemImage}" style="border: 2px solid ${rec.color};" onclick="itemDesc('${rec._id}')">
                   <p>${rec.itemName}</p>
-                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${rec.buildID}', '${rec._id}')">
+                  <img src="https://cdn.discordapp.com/attachments/416336627317866500/1228483408242409590/Untitled.png?ex=662c3554&is=6619c054&hm=9fd4095819da27ef957c95c1b9feccd6c69dddb2c173e6bf241d23a5e3a18e8f&" class="trash-icon" onclick="deleteItem('${buildID}', '${rec._id}')">
                </div>`;
     }
   }
-  console.log(html);
   result.innerHTML = html;
 }
 

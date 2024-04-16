@@ -42,7 +42,8 @@ async function addToBuild(uid, buildID, itemID, itemAmt, buildItemName, addToBui
 }
 
 //Deletes an item from a build
-async function deleteBuildItem(uid, buildID, buildItemID){
+async function deleteBuildItem(uid, ebuildID, buildItemID){
+    let buildID = decodeURIComponent(ebuildID);
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
     buildDocs.forEach((doc) => {
@@ -53,7 +54,8 @@ async function deleteBuildItem(uid, buildID, buildItemID){
 }
 
 //Deletes all items in build, then deletes the build itself
-async function deleteBuild(uid, buildID){
+async function deleteBuild(uid, ebuildID){
+    let buildID = decodeURIComponent(ebuildID);
     const builddb = collection(db, `/users/${uid}/builds/${buildID}/items`);
     const buildDocs = await getDocs(builddb);
     buildDocs.forEach((doc) => {

@@ -111,7 +111,6 @@
   <script type="module">
     import {auth, createUser, setAuthListeners, signIn, logout} from './auth.js';
     async function validateForm() {
-      console.log("hi");
       var username = document.forms["myForm"]["username"].value;
       var password = document.forms["myForm"]["password"].value;
       if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
@@ -123,10 +122,6 @@
       }
       await createUser(auth, username, password);
       let user = auth.currentUser;
-      console.log(auth);
-      console.log(username);
-      console.log(password);
-      console.log(user.uid);
     }
     window.validateForm = validateForm;
   </script>
