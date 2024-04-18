@@ -150,7 +150,7 @@ function drawCard(records){
   //This particular line adds a very special cat to the gallery
   let searchKey = document.querySelector('#search-key').value;
   if(searchKey === ''){
-    html += `<img onclick="itemDesc('vro')" src="https://cdn.discordapp.com/attachments/349291858393825291/1225338403281698928/image.png?ex=6620c451&is=660e4f51&hm=07c064fe08c874a18b0c0994823292b3d35319d7064cc64c8319ffb745aa0c0c&" style="border: 2px solid saddlebrown;">`
+    html += `<img onclick="itemDesc('vro')" src="https://i.imgur.com/DsXI7mu.png" style="border: 2px solid saddlebrown;">`
   }
   result.innerHTML = html;
 }
