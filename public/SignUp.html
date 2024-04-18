@@ -80,6 +80,22 @@
         .return-button:hover {
             background: linear-gradient(to right, #007bff, #0056b3);
         }
+        .password-toggle {
+            position: relative;
+        }
+        .password-toggle button {
+            position: absolute;
+            top: 28px;
+            right: 10px;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+        .password-toggle button img {
+            width: 20px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
@@ -91,9 +107,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s12 password-toggle">
         <label for="password">Password</label>
-        <input name="password" type="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Enter password">
+        <input name="password" type="password" id="passwordInput" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" placeholder="Enter password">
+        <button type="button" onclick="togglePassword()" id="toggleButton"><img src="https://www.freeiconspng.com/thumbs/eye-icon/eyeball-icon-png-eye-icon-1.png" alt="Show Password"></button>
         <p>Minimum length 8, at least 1 symbol, capital letter, common letter and number.</p>
       </div>
     </div>
@@ -103,7 +120,7 @@
         <input type="button" value="Sign Up" onclick="return validateForm()" />
       </div>
     </div>
-    
+
   </form>
 
   <a href="index.html" class="return-button">Return to Homepage</a>
@@ -113,7 +130,7 @@
     async function validateForm() {
       var username = document.forms["myForm"]["username"].value;
       var password = document.forms["myForm"]["password"].value;
-      if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
+      if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username) && /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
       window.location.href = 'index.html';
        // return false;
       } else {
@@ -124,6 +141,24 @@
       let user = auth.currentUser;
     }
     window.validateForm = validateForm;
+
   </script>
+
+  <script>
+    let isPasswordVisible = false;
+    function togglePassword() {
+        const passwordInput = document.getElementById("passwordInput");
+        const toggleButton = document.getElementById("toggleButton");
+        if (!isPasswordVisible) {
+            passwordInput.type = "text";
+            toggleButton.innerHTML = '<img src="https://static.thenounproject.com/png/1851136-200.png" alt="Hide Password">';
+        } else {
+            passwordInput.type = "password";
+            toggleButton.innerHTML = '<img src="https://www.freeiconspng.com/thumbs/eye-icon/eyeball-icon-png-eye-icon-1.png" alt="Show Password">';
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }
+  </script>
+  
 </body>
 </html>
