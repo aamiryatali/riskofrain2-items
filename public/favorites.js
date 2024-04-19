@@ -32,46 +32,29 @@ function itemDesc(item){
   let result = document.querySelector('#item-desc');
   document.querySelector('.container').style['margin-left'] = '25%';
   let html = '';
-  if(item === "vro"){
-    html += `<div id="full-page-element">
-    <button onclick="closeItemDesc()" class="x">X</button>
-    <br><br>
-
-    <p style="font-size: 20px; font-family: 'Bungee Spice', cursive;">Vro</p>
-    <img src="https://media1.tenor.com/m/t6VAu8neEjkAAAAd/cat-vro.gif" alt="Vro">
-    <br>
-    <hr style="width: 100%">
-    <br>
-    <p>Cat Description:</p>
-    <p>This is Vro. Due to her extensive involvement in the development of this page, you cannot remove her from your favorites.</p>
-
-    <p>Stack Type:</p>
-    <p>vro</p>
-    </div>`
-  } else {
-    for(let rec of state){
-      if(rec._id === item){
-        var itemName = fixedEncodeURIComponent(`${rec.itemName}`);
-        html += `<div id="full-page-element">
-          <button onclick="closeItemDesc()" class="x">X</button>
-          <br><br>
-          <p style="font-size: 20px">${rec.itemName}</p>
-          <img src="${rec.itemImage}" alt="${rec.itemName}">
-          <br>
-          <hr style="width: 100%">
-          <br>
-          <p>Item Description:</p>
-          <p>${rec.description}</p>
-          <p>Stack Type:</p>
-          <p>${rec.stackType}</p>
-          <div class="bottom-buttons">
-              <button class="build-button" onclick="showBuildDialog('${rec._id}', '${itemName}', '${rec.itemImage}')"></button>
-              <button class="favorite-button" onclick="addFavorite('${rec._id}', '${itemName}')"></button>
-          </div>
-          </div>`;
-      }
-    } 
-  }
+  for(let rec of state){
+    if(rec._id === item){
+      var itemName = fixedEncodeURIComponent(`${rec.itemName}`);
+      html += `<div id="full-page-element">
+        <button onclick="closeItemDesc()" class="x">X</button>
+        <br><br>
+        <p style="font-size: 20px">${rec.itemName}</p>
+        <img src="${rec.itemImage}" alt="${rec.itemName}">
+        <br>
+        <hr style="width: 100%">
+        <br>
+        <p>Item Description:</p>
+        <p>${rec.description}</p>
+        <p>Stack Type:</p>
+        <p>${rec.stackType}</p>
+        <div class="bottom-buttons">
+            <button class="build-button" onclick="showBuildDialog('${rec._id}', '${itemName}', '${rec.itemImage}')"></button>
+            <button class="favorite-button" onclick="addFavorite('${rec._id}', '${itemName}')"></button>
+        </div>
+        </div>`;
+    }
+  } 
+  
   //The onclick="showBuildDialog('${rec.itemName}')" was what did not work when the name
   //had an ' in it.
   result.innerHTML = html;
@@ -147,11 +130,6 @@ function drawCard(records){
     }
   }
 
-  //This particular line adds a very special cat to the gallery
-  let searchKey = document.querySelector('#search-key').value;
-  if(searchKey === ''){
-    html += `<img onclick="itemDesc('vro')" src="https://i.imgur.com/DsXI7mu.png" style="border: 2px solid saddlebrown;">`
-  }
   result.innerHTML = html;
 }
 
